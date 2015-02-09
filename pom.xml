@@ -78,6 +78,7 @@
     </dependencies>
     <profiles>
         <profile>
+            <activation><activeByDefault>true</activeByDefault></activation>
             <id>openshift</id>
             <build>
                 <finalName>mprojection</finalName>
