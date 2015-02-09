@@ -26,7 +26,7 @@ public final class HikariCPManager implements ConnectionManager {
     static {
         DRIVERS = new HashMap<>();
         DRIVERS.put("mysql", "com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        DRIVERS.put("postgres", "org.postgresql.ds.PGSimpleDataSource");
+        DRIVERS.put("postgresql", "org.postgresql.ds.PGSimpleDataSource");
     }
 
     private HikariDataSource dataSource;

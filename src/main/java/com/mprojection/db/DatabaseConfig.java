@@ -88,6 +88,7 @@ public final class DatabaseConfig {
     private static String get(String key) {
         String value = PROPERTIES.getProperty(key);
         if (value.startsWith("$")) {
+            System.out.println(value.substring(1));
             return System.getenv(value.substring(1));
         }
         return value;
