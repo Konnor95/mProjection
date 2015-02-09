@@ -103,7 +103,7 @@
                                <configuration>
                                    <tasks>
                                        <echo>Using db.openshift.properties</echo>
-                                       <copy file="db.openshift.properties" tofile="${project.build.outputDirectory}/db.properties"/>
+                                       <copy file="${project.build.outputDirectory}/db.openshift.properties" tofile="${project.build.outputDirectory}/db.properties"/>
                                    </tasks>
                                </configuration>
                            </execution>
