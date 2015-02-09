@@ -96,14 +96,14 @@
                        <version>1.8</version>
                        <executions>
                            <execution>
-                               <phase>generate-resources</phase>
+                               <phase>compile</phase>
                                <goals>
                                    <goal>run</goal>
                                </goals>
                                <configuration>
                                    <tasks>
-                                       <echo>Using db.openshift.properties</echo>
-                                       <copy file="db.openshift.properties" tofile="${project.build.outputDirectory}/db.properties"/>
+                                       <echo>Using db_openshift.properties</echo>
+                                       <copy file="${project.build.outputDirectory}/db_openshift.properties" tofile="${project.build.outputDirectory}/db.properties"/>
                                    </tasks>
                                </configuration>
                            </execution>
