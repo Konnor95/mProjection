@@ -15,6 +15,7 @@ public final class DatabaseConfig {
 
     private static final String DATABASE_CONFIG_FILE = "/db.properties";
     //    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
+    private static final Properties PROPERTIES;
     private static final String SERVER;
     private static final String PORT;
     private static final String DATABASE;
@@ -28,17 +29,17 @@ public final class DatabaseConfig {
 
     static {
         try (InputStream resource = DatabaseConfig.class.getResourceAsStream(DATABASE_CONFIG_FILE)) {
-            Properties properties = new Properties();
-            properties.load(resource);
-            SERVER = properties.getProperty("server");
-            PORT = properties.getProperty("port");
-            DATABASE = properties.getProperty("database");
-            RDBMS = properties.getProperty("rdbms");
-            USER = properties.getProperty("user");
-            PASSWORD = properties.getProperty("password");
-            TRANSACTION_ISOLATION = properties.getProperty("transactionIsolation");
-            ENCODING = properties.getProperty("encoding");
-            AUTO_RECONNECT = properties.getProperty("autoReconnect");
+            PROPERTIES = new Properties();
+            PROPERTIES.load(resource);
+            SERVER = get("server");
+            PORT = get("port");
+            DATABASE = get("database");
+            RDBMS = get("rdbms");
+            USER = get("user");
+            PASSWORD = get("password");
+            TRANSACTION_ISOLATION = get("transactionIsolation");
+            ENCODING = get("encoding");
+            AUTO_RECONNECT = get("autoReconnect");
             CONNECTION_URL = defineConnectionUrl();
         } catch (IOException e) {
 //            LOGGER.error("Cannot load config file: '{}'", DATABASE_CONFIG_FILE);
@@ -82,6 +83,14 @@ public final class DatabaseConfig {
         return "jdbc:" + RDBMS + "://" + SERVER + ":" + PORT + "/"
                 + DATABASE + "?characterEncoding=" + ENCODING + "&autoReconnect=" + AUTO_RECONNECT;
 
+    }
+
+    private static String get(String key) {
+        String value = PROPERTIES.getProperty(key);
+        if (value.startsWith("$")) {
+            return System.getenv(value.substring(1));
+        }
+        return value;
     }
 
     private DatabaseConfig() {

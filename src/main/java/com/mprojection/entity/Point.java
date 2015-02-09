@@ -1,9 +1,6 @@
 package com.mprojection.entity;
 
-/**
- * Created by Дмитрий on 2/9/2015.
- */
-public class Point extends Entity{
+public class Point extends Entity {
 
     private String name;
 
