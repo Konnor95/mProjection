@@ -13,7 +13,7 @@ public class TestController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Point index() {
         Point entity = new Point();
-        entity.setName(DatabaseConfig.getRdbms() + " " + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST"));
+        entity.setName(DatabaseConfig.getConnectionUrl());
         return entity;
     }
 
