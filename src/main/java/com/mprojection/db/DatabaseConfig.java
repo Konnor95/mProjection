@@ -1,6 +1,8 @@
 package com.mprojection.db;
 
 import com.mprojection.exception.FileException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,7 @@ import java.util.Properties;
 public final class DatabaseConfig {
 
     private static final String DATABASE_CONFIG_FILE = "/db.properties";
-    //    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
     private static final Properties PROPERTIES;
     private static final String SERVER;
     private static final String PORT;
@@ -42,7 +44,7 @@ public final class DatabaseConfig {
             AUTO_RECONNECT = get("autoReconnect");
             CONNECTION_URL = defineConnectionUrl();
         } catch (IOException e) {
-//            LOGGER.error("Cannot load config file: '{}'", DATABASE_CONFIG_FILE);
+            LOGGER.error("Cannot load config file: '{}'", DATABASE_CONFIG_FILE);
             throw new FileException("Cannot load config file: '" + DATABASE_CONFIG_FILE + "'", e);
         }
     }
@@ -88,7 +90,6 @@ public final class DatabaseConfig {
     private static String get(String key) {
         String value = PROPERTIES.getProperty(key);
         if (value.startsWith("$")) {
-            System.out.println(value.substring(1));
             return System.getenv(value.substring(1));
         }
         return value;
@@ -96,6 +97,5 @@ public final class DatabaseConfig {
 
     private DatabaseConfig() {
     }
-
 
 }

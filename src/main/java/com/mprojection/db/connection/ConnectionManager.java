@@ -1,5 +1,6 @@
-package com.mprojection.db.manager;
+package com.mprojection.db.connection;
 
+import javax.annotation.PreDestroy;
 import java.sql.Connection;
 
 /**
@@ -19,6 +20,7 @@ public interface ConnectionManager {
     /**
      * Closes data source connection.
      */
+    @PreDestroy
     void shutdown();
 
 }
