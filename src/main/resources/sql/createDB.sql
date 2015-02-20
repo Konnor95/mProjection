@@ -1,5 +1,5 @@
-DROP SCHEMA IF EXISTS public CASCADE;
-CREATE SCHEMA IF NOT EXISTS public;
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
 CREATE EXTENSION postgis;
 CREATE EXTENSION btree_gist;
 
@@ -31,12 +31,6 @@ AS
   $$
 LANGUAGE SQL;
 
-CREATE FUNCTION formatPoint(lat NUMERIC, lng NUMERIC) RETURNS TEXT
-AS
-  $$
-  SELECT format('SRID=4326;POINT(%2$s %1$s)', lat, lng)
-  $$
-LANGUAGE SQL;
 
 CREATE TABLE users (
   id            BIGSERIAL             NOT NULL PRIMARY KEY,
