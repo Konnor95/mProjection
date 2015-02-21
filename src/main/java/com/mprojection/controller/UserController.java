@@ -2,11 +2,14 @@ package com.mprojection.controller;
 
 import com.mprojection.entity.User;
 import com.mprojection.service.UserService;
+import com.mprojection.util.ErrorInfo;
 import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/user/")
@@ -37,6 +40,11 @@ public class UserController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public User update(@RequestBody User user) {
         return userService.updateAndReturn(user);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ErrorInfo handleError(HttpServletRequest request, Exception exception) {
+        return new ErrorInfo(request.getRequestURL().toString(), exception);
     }
 
 }
