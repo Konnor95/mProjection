@@ -1,43 +1,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <context:annotation-config/>
     <context:component-scan base-package="com.mprojection"/>
-    <context:property-placeholder/>
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
         <property name="proxyTargetClass" value="true"/>
-    </bean>
-    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"
-          p:poolName="springHikariCP"
-          p:connectionTestQuery="SELECT 1"
-          p:dataSourceClassName="com.impossibl.postgres.jdbc.PGDataSource">
-
-        <property name="dataSourceProperties">
-            <props>
-                <!--<prop key="host">localhost</prop>-->
-                <!--<prop key="port">5432</prop>-->
-                <!--<prop key="database">mprojection</prop>-->
-                <!--<prop key="user">potgres</prop>-->
-                <!--<prop key="password"/>-->
-                <prop key="host">${OPENSHIFT_POSTGRESQL_DB_HOST}</prop>
-                <prop key="port">${OPENSHIFT_POSTGRESQL_DB_PORT}</prop>
-                <prop key="database">${PGDATABASE}</prop>
-                <prop key="user">${OPENSHIFT_POSTGRESQL_DB_USERNAME}</prop>
-                <prop key="password">${OPENSHIFT_POSTGRESQL_DB_PASSWORD}</prop>
-                <prop key="preparedStatementCacheSize">250</prop>
-                <prop key="parsedSqlCacheSize">2048</prop>
-
-                <prop key="preparedStatementCacheSize">250</prop>
-                <prop key="parsedSqlCacheSize">2048</prop>
-            </props>
-        </property>
-    </bean>
-    <!-- HikariCP configuration -->
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown"
-          p:transactionIsolation="TRANSACTION_${db.transactionIsolation}">
-        <constructor-arg ref="hikariConfig"/>
     </bean>
 </beans>

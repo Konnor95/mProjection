@@ -1,13 +1,16 @@
 package com.mprojection.db.connection;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import static com.mprojection.db.DatabaseConfig.*;
 
 /**
  * A connection manager, based on HikariCP tool.
@@ -16,13 +19,26 @@ import java.sql.SQLException;
 public class HikariCPManager implements ConnectionManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HikariCPManager.class);
-    private static final boolean CACHE_PREPARE_STATEMENTS = true;
-    private static final int PREPARE_STATEMENTS_CACHE_SIZE = 250;
-    private static final int PREPARE_STATEMENTS_CACHE_SQL_LIMIT = 2048;
-    private static final boolean USE_SERVER_PREPARE_STATEMENTS = true;
-
-    @Autowired
     private HikariDataSource dataSource;
+
+    /**
+     * Instantiates a new manager.
+     */
+    public HikariCPManager() {
+        HikariConfig config = new HikariConfig();
+        config.setDataSourceClassName(getDataSource());
+        config.setInitializationFailFast(true);
+        String s = getHost();
+        config.addDataSourceProperty("host", getHost());
+        config.addDataSourceProperty("port", getPort());
+        config.addDataSourceProperty("database", getDatabase());
+        config.addDataSourceProperty("user", getUser());
+        config.addDataSourceProperty("password", getPassword());
+        config.addDataSourceProperty("preparedStatementCacheSize", getPreparedStatementCacheSize());
+        config.addDataSourceProperty("parsedSqlCacheSize", getParsedSqlCacheSize());
+        config.setTransactionIsolation("TRANSACTION_" + getTransactionIsolation());
+        dataSource = new HikariDataSource(config);
+    }
 
     @Override
     public Connection getConnection() {
@@ -35,6 +51,7 @@ public class HikariCPManager implements ConnectionManager {
     }
 
     @Override
+    @PreDestroy
     public void shutdown() {
         dataSource.close();
     }

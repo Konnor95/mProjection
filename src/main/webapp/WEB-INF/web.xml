@@ -38,10 +38,6 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:servletConfig.xml</param-value>
         </init-param>
-        <init-param>
-            <param-name>trimSpaces</param-name>
-            <param-value>true</param-value>
-        </init-param>
     </servlet>
 
 

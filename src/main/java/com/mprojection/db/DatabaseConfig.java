@@ -1,6 +1,7 @@
 package com.mprojection.db;
 
 import com.mprojection.exception.FileException;
+import com.mprojection.util.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,42 +16,44 @@ import java.util.Properties;
  */
 public final class DatabaseConfig {
 
-    private static final String DATABASE_CONFIG_FILE = "/db.properties";
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
     private static final Properties PROPERTIES;
-    private static final String SERVER;
+    private static final String DATA_SOURCE;
+    private static final String HOST;
     private static final String PORT;
     private static final String DATABASE;
-    private static final String RDBMS;
     private static final String USER;
     private static final String PASSWORD;
     private static final String TRANSACTION_ISOLATION;
-    private static final String ENCODING;
-    private static final String AUTO_RECONNECT;
-    private static final String CONNECTION_URL;
+    private static final String PREPARED_STATEMENT_CACHE_SIZE;
+    private static final String PARSED_SQL_CACHE_SIZE;
 
     static {
-        try (InputStream resource = DatabaseConfig.class.getResourceAsStream(DATABASE_CONFIG_FILE)) {
+        String file = "/db" + Environment.get().getPropertiesPostfix();
+        try (InputStream resource = DatabaseConfig.class.getResourceAsStream(file)) {
             PROPERTIES = new Properties();
             PROPERTIES.load(resource);
-            SERVER = get("server");
+            DATA_SOURCE = get("dataSource");
+            HOST = get("host");
             PORT = get("port");
             DATABASE = get("database");
-            RDBMS = get("rdbms");
             USER = get("user");
             PASSWORD = get("password");
             TRANSACTION_ISOLATION = get("transactionIsolation");
-            ENCODING = get("encoding");
-            AUTO_RECONNECT = get("autoReconnect");
-            CONNECTION_URL = defineConnectionUrl();
+            PREPARED_STATEMENT_CACHE_SIZE = get("preparedStatementCacheSize");
+            PARSED_SQL_CACHE_SIZE = get("parsedSqlCacheSize");
         } catch (IOException e) {
-            LOGGER.error("Cannot load config file: '{}'", DATABASE_CONFIG_FILE);
-            throw new FileException("Cannot load config file: '" + DATABASE_CONFIG_FILE + "'", e);
+            LOGGER.error("Cannot load config file: '{}'", file);
+            throw new FileException("Cannot load config file: '" + file + "'", e);
         }
     }
 
-    public static String getServer() {
-        return SERVER;
+    public static String getDataSource() {
+        return DATA_SOURCE;
+    }
+
+    public static String getHost() {
+        return HOST;
     }
 
     public static String getPort() {
@@ -59,10 +62,6 @@ public final class DatabaseConfig {
 
     public static String getDatabase() {
         return DATABASE;
-    }
-
-    public static String getRdbms() {
-        return RDBMS;
     }
 
     public static String getUser() {
@@ -77,14 +76,12 @@ public final class DatabaseConfig {
         return TRANSACTION_ISOLATION;
     }
 
-    public static String getConnectionUrl() {
-        return CONNECTION_URL;
+    public static String getPreparedStatementCacheSize() {
+        return PREPARED_STATEMENT_CACHE_SIZE;
     }
 
-    private static String defineConnectionUrl() {
-        return "jdbc:" + RDBMS + "://" + SERVER + ":" + PORT + "/"
-                + DATABASE + "?characterEncoding=" + ENCODING + "&autoReconnect=" + AUTO_RECONNECT;
-
+    public static String getParsedSqlCacheSize() {
+        return PARSED_SQL_CACHE_SIZE;
     }
 
     private static String get(String key) {
