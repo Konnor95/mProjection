@@ -9,7 +9,7 @@ import com.mprojection.weather.SunInfo;
 import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherConfig;
 import com.mprojection.weather.WeatherService;
-import com.mprojection.weather.measureunit.MeasureUnit;
+import com.mprojection.util.measureunit.MeasureUnit;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 

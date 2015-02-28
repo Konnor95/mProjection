@@ -1,4 +1,5 @@
-import com.mprojection.entity.User;
+import com.mprojection.entity.FullUserInfo;
+import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.entity.UserType;
 import com.mprojection.serializer.JSONSerializer;
 import com.mprojection.serializer.StreamSerializer;
@@ -47,7 +48,7 @@ public class UserControllerTest {
         String lng = "36.2249179";
         String measureUnit = "1";
         String timeZone = "GMT+02:00";
-        MvcResult result = mockMvc.perform(post("/user/updateAbilities")
+        MvcResult result = mockMvc.perform(post("/api/user/updateAbilities")
                 .param("lat", lat)
                 .param("lng", lng)
                 .param("measureUnit", measureUnit)
@@ -60,7 +61,7 @@ public class UserControllerTest {
 
     @Test
     public void add() throws Exception {
-        User user = new User();
+        FullUserInfo user = new FullUserInfo();
         user.setFirstName("First name");
         user.setLastName("Last name");
         user.setLogin("admin");
@@ -70,14 +71,14 @@ public class UserControllerTest {
         user.setLng(36.2249179);
         user.setType(UserType.SCIENTIST);
         user.setHp(100);
-        user.setLevel((short) 3);
+        user.setXp(100);
         String s = serialize(user);
-        MvcResult result = mockMvc.perform(post("/user/")
+        MvcResult result = mockMvc.perform(post("/api/user/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(s))
                 .andExpect(status().isOk())
                 .andReturn();
-        User user2 = deserialize(result, User.class);
+        PublicUserInfo user2 = deserialize(result, PublicUserInfo.class);
         System.out.println(user2);
     }
 

@@ -3,18 +3,17 @@ package com.mprojection.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class User extends Entity {
+public class PublicUserInfo extends Entity {
 
     private String firstName;
     private String lastName;
     private String login;
-    private String facebookToken;
-    private String appleToken;
     private double lat;
     private double lng;
     private int hp;
-    private short level;
     private short type;
+    private int visibility;
+    private Double distance;
 
     public String getFirstName() {
         return firstName;
@@ -38,22 +37,6 @@ public class User extends Entity {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getFacebookToken() {
-        return facebookToken;
-    }
-
-    public void setFacebookToken(String facebookToken) {
-        this.facebookToken = facebookToken;
-    }
-
-    public String getAppleToken() {
-        return appleToken;
-    }
-
-    public void setAppleToken(String appleToken) {
-        this.appleToken = appleToken;
     }
 
     public double getLat() {
@@ -80,18 +63,20 @@ public class User extends Entity {
         this.hp = hp;
     }
 
-    public short getLevel() {
-        return level;
+    public short getRole() {
+        return type;
     }
 
-    public void setLevel(short level) {
-        this.level = level > 0 ? level : 1;
+    public void setRole(short role) {
+        type = role;
     }
 
+    @JsonIgnore
     public UserType getType() {
         return UserType.define(type);
     }
 
+    @JsonIgnore
     public void setType(UserType type) {
         this.type = (short) (type.ordinal());
     }
@@ -99,6 +84,22 @@ public class User extends Entity {
     @JsonIgnore
     public short getTypeOrdinal() {
         return type;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(int visibility) {
+        this.visibility = visibility;
+    }
+    
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     @JsonProperty

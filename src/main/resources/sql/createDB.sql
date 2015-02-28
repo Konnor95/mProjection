@@ -31,7 +31,6 @@ AS
   $$
 LANGUAGE SQL;
 
-
 CREATE TABLE users (
   id            BIGSERIAL             NOT NULL PRIMARY KEY,
   firstName     VARCHAR(1000)         NOT NULL,
@@ -43,8 +42,13 @@ CREATE TABLE users (
   lng           DOUBLE PRECISION      NOT NULL CHECK (lng > -180 AND lng <= 180),
   location      GEOMETRY(POINT, 4326) NOT NULL,
   hp            INT                   NOT NULL DEFAULT 100,
-  level         SMALLINT              NOT NULL DEFAULT 1,
-  type          SMALLINT              NOT NULL DEFAULT 0
+  xp            INT                   NOT NULL DEFAULT 0,
+  type          SMALLINT              NOT NULL DEFAULT 0,
+  isOnline      BOOLEAN               NOT NULL DEFAULT TRUE,
+  isDead        BOOLEAN               NOT NULL DEFAULT FALSE,
+  visibility    INT                   NOT NULL,
+  attackFactor  DOUBLE PRECISION      NOT NULL DEFAULT 1,
+  defenseFactor DOUBLE PRECISION      NOT NULL DEFAULT 1
 );
 
 CREATE INDEX users_location_idx ON users USING GIST (location);
@@ -53,15 +57,34 @@ CREATE TABLE history (
   date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE abilities (
-  userId      BIGINT   NOT NULL,
-  abilityType SMALLINT NOT NULL,
-  abilityId   SMALLINT NOT NULL,
+CREATE TABLE user_abilities (
+  userId    BIGINT       NOT NULL,
+  abilityId VARCHAR(100) NOT NULL,
   FOREIGN KEY (userId) REFERENCES users (id)
   ON DELETE CASCADE
   ON UPDATE RESTRICT
 );
 
-INSERT INTO users (firstName, lastName, login, facebookToken, appleToken, lat, lng, location, hp, level, type)
-VALUES ('Дмитрий', 'Бекузаров', 'Dima', 'facebook123', 'apple123', 50.0260317, 36.2249179,
-        'SRID=4326;POINT(36.2249179 50.0260317)', 100, 2, 2);
+CREATE VIEW users_public AS
+  SELECT
+    id,
+    firstName,
+    lastName,
+    login,
+    lat,
+    lng,
+    location,
+    hp,
+    type,
+    visibility
+  FROM users;
+
+
+INSERT INTO users (firstName, lastName, login, facebookToken, appleToken, lat, lng, location, hp, xp, type, visibility)
+VALUES ('Дмитрий1', 'Бекузаров1', 'Dima1', 'facebook1', 'apple1', 50.0260317, 36.2249179,
+        'SRID=4326;POINT(36.2249179 50.0260317)', 100, 1000, 0, 50),
+  ('Дмитрий2', 'Бекузаров2', 'Dima2', 'facebook2', 'apple2', 50.0260313, 36.2249173,
+   'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1,25),
+  ('Дмитрий3', 'Бекузаров3', 'Dima3', 'facebook3', 'apple3', 50.0260613, 36.2249473,
+   'SRID=4326;POINT(36.2249473 50.0260613)', 100, 0, 2, 100);
+;

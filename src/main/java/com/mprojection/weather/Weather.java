@@ -1,7 +1,7 @@
 package com.mprojection.weather;
 
-import com.mprojection.weather.measureunit.MeasureUnit;
-import com.mprojection.weather.measureunit.MeasureUnitConverter;
+import com.mprojection.util.measureunit.MeasureUnit;
+import com.mprojection.util.measureunit.MeasureUnitConverter;
 
 public class Weather {
 

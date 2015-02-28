@@ -8,4 +8,13 @@
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
         <property name="proxyTargetClass" value="true"/>
     </bean>
+    <bean class="com.mprojection.util.Translator">
+        <constructor-arg name="bundlePath" value="messages"/>
+        <constructor-arg name="locales">
+            <list>
+                <value>en</value>
+                <value>ru</value>
+            </list>
+        </constructor-arg>
+    </bean>
 </beans>

@@ -1,4 +1,4 @@
-import com.mprojection.entity.User;
+import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.entity.UserType;
 import com.mprojection.serializer.JSONSerializer;
 import com.mprojection.serializer.StreamSerializer;
@@ -10,20 +10,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-/**
- * Created by Дмитрий on 2/19/2015.
- */
 public class UserTest {
 
     @Test
     public void test() {
         StreamSerializer serializer = new JSONSerializer();
-        User user = new User();
+        PublicUserInfo user = new PublicUserInfo();
         user.setId(1);
         user.setType(UserType.ZOMBIE);
         String s = serialize(serializer, user);
         System.out.println(s);
-        User user2 = deserialize(serializer, s, User.class);
+        PublicUserInfo user2 = deserialize(serializer, s, PublicUserInfo.class);
         System.out.println(user2.isHuman());
         System.out.println(user2.isZombie());
     }

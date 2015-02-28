@@ -2,7 +2,7 @@ package com.mprojection.weather.openweather;
 
 import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherWrapper;
-import com.mprojection.weather.measureunit.MeasureUnit;
+import com.mprojection.util.measureunit.MeasureUnit;
 
 public final class CurrentOpenWeatherWrapper implements WeatherWrapper {
 

@@ -1,0 +1,83 @@
+package com.mprojection.entity;
+
+import com.mprojection.entity.ability.UserAbility;
+
+import java.util.List;
+
+public class FullUserInfo extends PublicUserInfo {
+
+    private String facebookToken;
+    private String appleToken;
+    private int xp;
+    private boolean isOnline;
+    private boolean isDead;
+    private double attackFactor;
+    private double defenseFactor;
+    private List<UserAbility> abilities;
+
+    public String getFacebookToken() {
+        return facebookToken;
+    }
+
+    public void setFacebookToken(String facebookToken) {
+        this.facebookToken = facebookToken;
+    }
+
+    public String getAppleToken() {
+        return appleToken;
+    }
+
+    public void setAppleToken(String appleToken) {
+        this.appleToken = appleToken;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public List<UserAbility> getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(List<UserAbility> abilities) {
+        this.abilities = abilities;
+    }
+
+    public double getAttackFactor() {
+        return attackFactor;
+    }
+
+    public void setAttackFactor(double attackFactor) {
+        this.attackFactor = attackFactor;
+    }
+
+    public double getDefenseFactor() {
+        return defenseFactor;
+    }
+
+    public void setDefenseFactor(double defenseFactor) {
+        this.defenseFactor = defenseFactor;
+    }
+
+
+}

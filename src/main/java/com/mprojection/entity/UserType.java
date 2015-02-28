@@ -1,16 +1,23 @@
 package com.mprojection.entity;
 
 public enum UserType {
-    SOLDIER,
-    SCIENTIST,
-    ZOMBIE;
+
+    SOLDIER(50),
+    SCIENTIST(25),
+    ZOMBIE(100);
+
+    private int defaultVisibility;
+
+    UserType(int defaultVisibility) {
+        this.defaultVisibility = defaultVisibility;
+    }
 
     public static UserType define(int type) {
-        UserType[] roles = values();
-        if (type >= roles.length || type < 0) {
+        UserType[] types = values();
+        if (type >= types.length || type < 0) {
             throw new IllegalArgumentException("Invalid type");
         }
-        return roles[type];
+        return types[type];
     }
 
     public boolean isHuman() {
@@ -21,4 +28,7 @@ public enum UserType {
         return this == ZOMBIE;
     }
 
+    public int getDefaultVisibility() {
+        return defaultVisibility;
+    }
 }

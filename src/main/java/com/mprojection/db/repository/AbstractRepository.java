@@ -35,9 +35,21 @@ public abstract class AbstractRepository<T> implements EntityRepository<T> {
      * @param <E>       type of the entity. Must inherit the type repository is responsible for
      * @return received entity
      */
-    protected <E extends T> E getById(long id, String sql, Extractor<E> extractor) {
+    protected <E> E getById(long id, String sql, Extractor<E> extractor) {
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setLong(1, id);
+            List<E> records = executeQuery(ps, extractor);
+            return records.isEmpty() ? null : records.get(0);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    protected <E> E getById(long id, String token, String sql, Extractor<E> extractor) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ps.setString(2, token);
             List<E> records = executeQuery(ps, extractor);
             return records.isEmpty() ? null : records.get(0);
         } catch (SQLException e) {
