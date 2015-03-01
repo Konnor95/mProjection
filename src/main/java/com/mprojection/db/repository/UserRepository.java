@@ -80,10 +80,12 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setDouble(1, user.getLat());
             ps.setDouble(2, user.getLng());
-            ps.setInt(3, user.getVisibility());
-            ps.setLong(4, user.getId());
-            ps.setDouble(5, user.getLat());
-            ps.setDouble(6, user.getLng());
+            ps.setDouble(3, user.getLat());
+            ps.setDouble(4, user.getLng());
+            ps.setInt(5, user.getVisibility());
+            ps.setLong(6, user.getId());
+            ps.setDouble(7, user.getLat());
+            ps.setDouble(8, user.getLng());
             return executeQuery(ps, PUBLIC_USER_INFO_EXTRACTOR);
         } catch (SQLException e) {
             LOGGER.warn(ERROR_MESSAGE, sql, e);

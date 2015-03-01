@@ -8,28 +8,28 @@ AS
   $$
   SELECT format('SRID=4326;POINT(%2$s %1$s)', lat, lng)
   $$
-LANGUAGE SQL;
+LANGUAGE SQL STABLE;
 
 CREATE FUNCTION distance(lat1 NUMERIC, lng1 NUMERIC, lat2 NUMERIC, lng2 NUMERIC) RETURNS DOUBLE PRECISION
 AS
   $$
   SELECT ST_Distance(formatPoint(lat1, lng1) :: GEOGRAPHY, formatPoint(lat2, lng2) :: GEOGRAPHY);
   $$
-LANGUAGE SQL;
+LANGUAGE SQL STABLE;
 
 CREATE FUNCTION distance(lat NUMERIC, lng NUMERIC, p TEXT) RETURNS DOUBLE PRECISION
 AS
   $$
   SELECT ST_Distance(formatPoint(lat, lng) :: GEOGRAPHY, p :: GEOGRAPHY);
   $$
-LANGUAGE SQL;
+LANGUAGE SQL STABLE;
 
 CREATE FUNCTION distance(p1 TEXT, p2 TEXT) RETURNS DOUBLE PRECISION
 AS
   $$
   SELECT ST_Distance(p1 :: GEOGRAPHY, p2 :: GEOGRAPHY);
   $$
-LANGUAGE SQL;
+LANGUAGE SQL STABLE;
 
 CREATE TABLE users (
   id            BIGSERIAL             NOT NULL PRIMARY KEY,
@@ -77,14 +77,15 @@ CREATE VIEW users_public AS
     hp,
     type,
     visibility
-  FROM users;
+  FROM users
+  WHERE isDead = FALSE AND isOnline = TRUE;
 
 
 INSERT INTO users (firstName, lastName, login, facebookToken, appleToken, lat, lng, location, hp, xp, type, visibility)
 VALUES ('Дмитрий1', 'Бекузаров1', 'Dima1', 'facebook1', 'apple1', 50.0260317, 36.2249179,
         'SRID=4326;POINT(36.2249179 50.0260317)', 100, 1000, 0, 50),
   ('Дмитрий2', 'Бекузаров2', 'Dima2', 'facebook2', 'apple2', 50.0260313, 36.2249173,
-   'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1,25),
+   'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1, 25),
   ('Дмитрий3', 'Бекузаров3', 'Dima3', 'facebook3', 'apple3', 50.0260613, 36.2249473,
    'SRID=4326;POINT(36.2249473 50.0260613)', 100, 0, 2, 100);
 ;
