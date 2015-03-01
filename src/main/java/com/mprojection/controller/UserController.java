@@ -6,7 +6,6 @@ import com.mprojection.exception.DAOException;
 import com.mprojection.service.UserService;
 import com.mprojection.util.ErrorInfo;
 import com.mprojection.util.measureunit.MeasureUnit;
-import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,22 +25,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "updateAbilities", method = RequestMethod.POST)
-    public Weather updateAbilities(double lat, double lng, Integer measureUnit, String timeZone) {
-        return weatherService.getCurrentWeather(lat, lng, measureUnit, timeZone);
-    }
+    // TODO
+//
+//    @RequestMapping(value = "updateAbilities", method = RequestMethod.POST)
+//    public Weather updateAbilities(double lat, double lng, Integer measureUnit, String timeZone) {
+//        return weatherService.getCurrentWeather(lat, lng, measureUnit, timeZone);
+//    }
 
-    @RequestMapping(value = "{id}/", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/public/", method = RequestMethod.GET)
     public PublicUserInfo get(@PathVariable long id) {
         return userService.getPublicInfo(id);
     }
 
-    @RequestMapping(value = "{id}/nearest/", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/public/nearest/", method = RequestMethod.GET)
     public List<PublicUserInfo> getNearest(@PathVariable long id) {
         return userService.getNearest(id);
     }
 
-    @RequestMapping(value = "full/{id}/", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/", method = RequestMethod.GET)
     public FullUserInfo getFullInfo(@PathVariable long id, Integer measureUnit) {
         return userService.get(id, MeasureUnit.define(measureUnit));
     }
@@ -56,7 +57,7 @@ public class UserController {
         return userService.updateAndReturn(user, MeasureUnit.define(measureUnit));
     }
 
-    @RequestMapping(value = "full/{id}/ability/{abilityId}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/ability/{abilityId}/", method = RequestMethod.PUT)
     public FullUserInfo addAbility(@PathVariable long id, @PathVariable String abilityId, Integer measureUnit) {
         return userService.addAbility(id, MeasureUnit.define(measureUnit), abilityId);
     }

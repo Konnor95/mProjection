@@ -2,14 +2,16 @@ package com.mprojection.entity;
 
 public enum UserType {
 
-    SOLDIER(50),
-    SCIENTIST(25),
-    ZOMBIE(100);
+    SOLDIER(50, 100),
+    SCIENTIST(25, 100),
+    ZOMBIE(100, 100);
 
     private int defaultVisibility;
+    private int defaultHp;
 
-    UserType(int defaultVisibility) {
+    UserType(int defaultVisibility, int defaultHp) {
         this.defaultVisibility = defaultVisibility;
+        this.defaultHp = defaultHp;
     }
 
     public static UserType define(int type) {
@@ -30,5 +32,9 @@ public enum UserType {
 
     public int getDefaultVisibility() {
         return defaultVisibility;
+    }
+
+    public int getDefaultHp() {
+        return defaultHp;
     }
 }
