@@ -1,6 +1,6 @@
 package com.mprojection.weather;
 
-import com.luckycatlabs.sunrisesunset.dto.Location;
+import com.mprojection.util.measureunit.MeasureUnit;
 
 /**
  * Provides access for weather data.
@@ -10,13 +10,13 @@ public interface WeatherService {
     /**
      * Gets current weather by coordinates.
      *
-     * @param lat latitude
-     * @param lng longitude
+     * @param lat         latitude
+     * @param lng         longitude
      * @param measureUnit measure unit type
      * @return current weather
      */
-    Weather getCurrentWeather(double lat, double lng, int measureUnit, String timeZone);
+    Weather getCurrentWeather(double lat, double lng, MeasureUnit measureUnit, String timeZone);
 
-    SunInfo getSunInfo(Location location, String timeZoneIdentifier);
+    SunInfo getSunInfo(double lat, double lng, String timeZoneIdentifier);
 
 }

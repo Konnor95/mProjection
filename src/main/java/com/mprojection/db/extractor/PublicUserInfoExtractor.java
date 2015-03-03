@@ -25,6 +25,12 @@ public class PublicUserInfoExtractor implements Extractor<PublicUserInfo> {
         user.setHp(rs.getInt("hp"));
         user.setType(UserType.define(rs.getShort("type")));
         user.setVisibility(rs.getInt("visibility"));
+        user.setAbilityAttackFactor(rs.getFloat("abilityAttackFactor"));
+        user.setAbilityDefenseFactor(rs.getFloat("abilityDefenseFactor"));
+        user.setTemperatureAttackFactor(rs.getFloat("temperatureAttackFactor"));
+        user.setTemperatureDefenseFactor(rs.getFloat("temperatureDefenseFactor"));
+        user.setSunAttackFactor(rs.getFloat("sunAttackFactor"));
+        user.setSunDefenseFactor(rs.getFloat("sunDefenseFactor"));
         Double dist;
         try {
             dist = rs.getDouble("dist");

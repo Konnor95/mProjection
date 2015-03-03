@@ -11,8 +11,6 @@ public class FullUserInfo extends PublicUserInfo {
     private int xp;
     private boolean isOnline;
     private boolean isDead;
-    private double attackFactor;
-    private double defenseFactor;
     private List<UserAbility> abilities;
 
     public String getFacebookToken() {
@@ -62,22 +60,4 @@ public class FullUserInfo extends PublicUserInfo {
     public void setAbilities(List<UserAbility> abilities) {
         this.abilities = abilities;
     }
-
-    public double getAttackFactor() {
-        return attackFactor;
-    }
-
-    public void setAttackFactor(double attackFactor) {
-        this.attackFactor = attackFactor;
-    }
-
-    public double getDefenseFactor() {
-        return defenseFactor;
-    }
-
-    public void setDefenseFactor(double defenseFactor) {
-        this.defenseFactor = defenseFactor;
-    }
-
-
 }

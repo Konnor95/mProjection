@@ -36,6 +36,11 @@ public class UserService {
         repository.update(user);
     }
 
+    public FullUserInfo updateWithFactors(FullUserInfo user, MeasureUnit measureUnit) {
+        repository.updateWithFactors(user);
+        return get(user.getId(), measureUnit);
+    }
+
     public FullUserInfo updateAndReturn(FullUserInfo user, MeasureUnit measureUnit) {
         update(user);
         return get(user.getId(), measureUnit);
@@ -74,8 +79,23 @@ public class UserService {
         return user;
     }
 
+    public PublicUserInfo attack(PublicUserInfo user1, PublicUserInfo user2) {
+        int damage = (int) (user1.getAttackFactor() * 2 - user2.getDefenseFactor());
+        if (damage < 0) {
+            damage = 0;
+        }
+        int hp2 = user2.getHp() - damage;
+        if (hp2 < 0) {
+            hp2 = 0;
+        }
+        user2.setHp(hp2);
+        repository.update(user2);
+        return user2;
+    }
+
     private List<String> getAbilitiesIds(long id) {
         return repository.getAbilitiesIds(id);
     }
+
 
 }

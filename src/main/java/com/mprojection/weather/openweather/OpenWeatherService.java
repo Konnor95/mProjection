@@ -5,11 +5,11 @@ import com.mprojection.serializer.JSONSerializer;
 import com.mprojection.serializer.StreamSerializer;
 import com.mprojection.util.ArrayUtil;
 import com.mprojection.util.URLHelper;
+import com.mprojection.util.measureunit.MeasureUnit;
 import com.mprojection.weather.SunInfo;
 import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherConfig;
 import com.mprojection.weather.WeatherService;
-import com.mprojection.util.measureunit.MeasureUnit;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -22,17 +22,16 @@ public final class OpenWeatherService implements WeatherService {
     private static final StreamSerializer serializer = new JSONSerializer();
 
     @Override
-    public Weather getCurrentWeather(double lat, double lng, int measureUnit, String timeZone) {
-        MeasureUnit unit = MeasureUnit.define(measureUnit);
+    public Weather getCurrentWeather(double lat, double lng, MeasureUnit measureUnit, String timeZone) {
         String url = prepareURL("openweathermap.current.by.coordiantes", lat, lng);
         InputStream stream = URLHelper.getInputStream(url);
-        return serializer.deserialize(stream, CurrentOpenWeatherWrapper.class).toWeather(MeasureUnit.METRIC);
+        return serializer.deserialize(stream, CurrentOpenWeatherWrapper.class).toWeather(measureUnit);
     }
 
     @Override
-    public SunInfo getSunInfo(Location location, String timeZoneIdentifier) {
+    public SunInfo getSunInfo(double lat, double lng, String timeZoneIdentifier) {
         SunInfo sunInfo = new SunInfo();
-        sunInfo.setSunCycle(location, timeZoneIdentifier);
+        sunInfo.setSunCycle(new Location(lat, lng), timeZoneIdentifier);
         return sunInfo;
     }
 

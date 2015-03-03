@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DeadlyAttack extends Ability {
 
-    private static final double ATTACK_FACTOR = 3;
+    private static final float ATTACK_FACTOR = 3f;
 
     public DeadlyAttack() {
         super("ability.zombie.attack.deadly.name", "ability.zombie.attack.deadly.description", 300, false);
@@ -22,6 +22,6 @@ public class DeadlyAttack extends Ability {
     @Override
     public void apply(FullUserInfo user, Translator translator) {
         super.apply(user, translator);
-        user.setAttackFactor(ATTACK_FACTOR);
+        user.setAbilityAttackFactor(ATTACK_FACTOR);
     }
 }

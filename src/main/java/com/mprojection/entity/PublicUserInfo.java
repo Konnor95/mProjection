@@ -13,6 +13,12 @@ public class PublicUserInfo extends Entity {
     private int hp;
     private short type;
     private int visibility;
+    private float abilityAttackFactor;
+    private float abilityDefenseFactor;
+    private float temperatureAttackFactor;
+    private float temperatureDefenseFactor;
+    private float sunAttackFactor;
+    private float sunDefenseFactor;
     private Double distance;
 
     public String getFirstName() {
@@ -93,11 +99,73 @@ public class PublicUserInfo extends Entity {
     public void setVisibility(int visibility) {
         this.visibility = visibility;
     }
-    
+
+    @JsonIgnore
+    public float getAbilityAttackFactor() {
+        return abilityAttackFactor;
+    }
+
+    @JsonIgnore
+    public void setAbilityAttackFactor(float abilityAttackFactor) {
+        this.abilityAttackFactor = abilityAttackFactor;
+    }
+
+    @JsonIgnore
+    public float getAbilityDefenseFactor() {
+        return abilityDefenseFactor;
+    }
+
+    @JsonIgnore
+    public void setAbilityDefenseFactor(float abilityDefenseFactor) {
+        this.abilityDefenseFactor = abilityDefenseFactor;
+    }
+
+    @JsonIgnore
+    public float getTemperatureAttackFactor() {
+        return temperatureAttackFactor;
+    }
+
+    @JsonIgnore
+    public void setTemperatureAttackFactor(float temperatureAttackFactor) {
+        this.temperatureAttackFactor = temperatureAttackFactor;
+    }
+
+    @JsonIgnore
+    public float getTemperatureDefenseFactor() {
+        return temperatureDefenseFactor;
+    }
+
+    @JsonIgnore
+    public void setTemperatureDefenseFactor(float temperatureDefenseFactor) {
+        this.temperatureDefenseFactor = temperatureDefenseFactor;
+    }
+
+    @JsonIgnore
+    public float getSunAttackFactor() {
+        return sunAttackFactor;
+    }
+
+    @JsonIgnore
+    public void setSunAttackFactor(float sunAttackFactor) {
+        this.sunAttackFactor = sunAttackFactor;
+    }
+
+    @JsonIgnore
+    public float getSunDefenseFactor() {
+        return sunDefenseFactor;
+    }
+
+    @JsonIgnore
+    public void setSunDefenseFactor(float sunDefenseFactor) {
+        this.sunDefenseFactor = sunDefenseFactor;
+    }
+
+    @JsonIgnore
     public Double getDistance() {
         return distance;
     }
 
+    @JsonIgnore
     public void setDistance(Double distance) {
         this.distance = distance;
     }
@@ -122,4 +190,15 @@ public class PublicUserInfo extends Entity {
     public void setZombie(boolean isZombie) {
 
     }
+
+    @JsonIgnore
+    public float getAttackFactor() {
+        return abilityAttackFactor * temperatureAttackFactor * sunAttackFactor;
+    }
+
+    @JsonIgnore
+    public float getDefenseFactor() {
+        return abilityDefenseFactor * temperatureDefenseFactor * sunDefenseFactor;
+    }
+
 }

@@ -44,6 +44,28 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         update(user, get("user.update"));
     }
 
+    public void updateWithFactors(FullUserInfo user) {
+        String sql = get("user.update.with.factors");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            prepareForUpdateWithFactors(user, ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    public void update(PublicUserInfo user) {
+        String sql = get("user.update.public");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            prepareForUpdate(user, ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
     @Override
     public void delete(long id) {
 
@@ -129,8 +151,29 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         int index = prepareForInsert(user, ps);
         ps.setBoolean(++index, user.isOnline());
         ps.setBoolean(++index, user.isDead());
-        ps.setDouble(++index, user.getAttackFactor());
-        ps.setDouble(++index, user.getDefenseFactor());
+        ps.setLong(++index, user.getId());
+        return index;
+    }
+
+    private int prepareForUpdateWithFactors(FullUserInfo user, PreparedStatement ps) throws SQLException {
+        int index = prepareForInsert(user, ps);
+        ps.setBoolean(++index, user.isOnline());
+        ps.setBoolean(++index, user.isDead());
+        ps.setFloat(++index, user.getAbilityAttackFactor());
+        ps.setFloat(++index, user.getAbilityDefenseFactor());
+        ps.setFloat(++index, user.getTemperatureAttackFactor());
+        ps.setFloat(++index, user.getTemperatureDefenseFactor());
+        ps.setFloat(++index, user.getSunAttackFactor());
+        ps.setFloat(++index, user.getSunDefenseFactor());
+        ps.setLong(++index, user.getId());
+        return index;
+    }
+
+    private int prepareForUpdate(PublicUserInfo user, PreparedStatement ps) throws SQLException {
+        int index = 0;
+        ps.setInt(++index, user.getHp());
+        boolean isDead = user.getHp() < 0;
+        ps.setBoolean(++index, isDead);
         ps.setLong(++index, user.getId());
         return index;
     }

@@ -32,23 +32,27 @@ AS
 LANGUAGE SQL STABLE;
 
 CREATE TABLE users (
-  id            BIGSERIAL             NOT NULL PRIMARY KEY,
-  firstName     VARCHAR(1000)         NOT NULL,
-  lastName      VARCHAR(1000)         NOT NULL,
-  login         VARCHAR(200)          NOT NULL,
-  facebookToken VARCHAR(200)                   DEFAULT NULL UNIQUE,
-  appleToken    VARCHAR(200)                   DEFAULT NULL UNIQUE,
-  lat           DOUBLE PRECISION      NOT NULL CHECK (lat > -90 AND lat <= 90),
-  lng           DOUBLE PRECISION      NOT NULL CHECK (lng > -180 AND lng <= 180),
-  location      GEOMETRY(POINT, 4326) NOT NULL,
-  hp            INT                   NOT NULL DEFAULT 100,
-  xp            INT                   NOT NULL DEFAULT 0,
-  type          SMALLINT              NOT NULL DEFAULT 0,
-  isOnline      BOOLEAN               NOT NULL DEFAULT TRUE,
-  isDead        BOOLEAN               NOT NULL DEFAULT FALSE,
-  visibility    INT                   NOT NULL,
-  attackFactor  DOUBLE PRECISION      NOT NULL DEFAULT 1,
-  defenseFactor DOUBLE PRECISION      NOT NULL DEFAULT 1
+  id                       BIGSERIAL             NOT NULL PRIMARY KEY,
+  firstName                VARCHAR(1000)         NOT NULL,
+  lastName                 VARCHAR(1000)         NOT NULL,
+  login                    VARCHAR(200)          NOT NULL,
+  facebookToken            VARCHAR(200)                   DEFAULT NULL UNIQUE,
+  appleToken               VARCHAR(200)                   DEFAULT NULL UNIQUE,
+  lat                      DOUBLE PRECISION      NOT NULL CHECK (lat > -90 AND lat <= 90),
+  lng                      DOUBLE PRECISION      NOT NULL CHECK (lng > -180 AND lng <= 180),
+  location                 GEOMETRY(POINT, 4326) NOT NULL,
+  hp                       INT                   NOT NULL DEFAULT 100,
+  xp                       INT                   NOT NULL DEFAULT 0,
+  type                     SMALLINT              NOT NULL DEFAULT 0,
+  isOnline                 BOOLEAN               NOT NULL DEFAULT TRUE,
+  isDead                   BOOLEAN               NOT NULL DEFAULT FALSE,
+  visibility               INT                   NOT NULL,
+  abilityAttackFactor      FLOAT                 NOT NULL DEFAULT 1,
+  abilityDefenseFactor     FLOAT                 NOT NULL DEFAULT 1,
+  temperatureAttackFactor  FLOAT                 NOT NULL DEFAULT 1,
+  temperatureDefenseFactor FLOAT                 NOT NULL DEFAULT 1,
+  sunAttackFactor          FLOAT                 NOT NULL DEFAULT 1,
+  sunDefenseFactor         FLOAT                 NOT NULL DEFAULT 1
 );
 
 CREATE INDEX users_location_idx ON users USING GIST (location);
@@ -76,7 +80,13 @@ CREATE VIEW users_public AS
     location,
     hp,
     type,
-    visibility
+    visibility,
+    abilityAttackFactor,
+    abilityDefenseFactor,
+    temperatureAttackFactor,
+    temperatureDefenseFactor,
+    sunAttackFactor,
+    sunDefenseFactor
   FROM users
   WHERE isDead = FALSE AND isOnline = TRUE;
 

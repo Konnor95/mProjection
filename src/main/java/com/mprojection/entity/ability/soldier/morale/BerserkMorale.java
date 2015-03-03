@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BerserkMorale extends Ability {
 
-    private static final double ATTACK_FACTOR = 3;
+    private static final float ATTACK_FACTOR = 3f;
 
     public BerserkMorale() {
         super("ability.soldier.morale.berserk.name", "ability.soldier.morale.berserk.description", 300, false);
@@ -22,6 +22,6 @@ public class BerserkMorale extends Ability {
     @Override
     public void apply(FullUserInfo user, Translator translator) {
         super.apply(user, translator);
-        user.setAttackFactor(ATTACK_FACTOR);
+        user.setAbilityAttackFactor(ATTACK_FACTOR);
     }
 }

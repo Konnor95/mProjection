@@ -18,8 +18,6 @@ public class FullUserInfoExtractor implements Extractor<FullUserInfo> {
         user.setXp(rs.getInt("xp"));
         user.setOnline(rs.getBoolean("isOnline"));
         user.setDead(rs.getBoolean("isDead"));
-        user.setAttackFactor(rs.getDouble("attackFactor"));
-        user.setDefenseFactor(rs.getDouble("defenseFactor"));
         return user;
     }
 
