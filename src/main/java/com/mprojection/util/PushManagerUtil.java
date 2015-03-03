@@ -23,7 +23,7 @@ public class PushManagerUtil {
         InputStream resource = DatabaseConfig.class.getResourceAsStream("/mProjection.p12");
         pushManager = new PushManager<>(
                 ApnsEnvironment.getSandboxEnvironment(),
-                SSLContextUtil.createDefaultSSLContext(resource, "vova2704"),
+                SSLContextUtil.createDefaultSSLContext(resource, "270495"),
                 null, // Optional: custom event loop group
                 null, // Optional: custom ExecutorService for calling listeners
                 null, // Optional: custom BlockingQueue implementation
