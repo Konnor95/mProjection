@@ -38,6 +38,11 @@ public class Translator {
         return bundle.getString(key);
     }
 
+    public String translate(String key, String locale) {
+        ResourceBundle bundle = resourceBundles.get(locale);
+        return bundle.getString(key);
+    }
+
     private String getLocale() {
         return LocaleContextHolder.getLocale().getLanguage();
     }

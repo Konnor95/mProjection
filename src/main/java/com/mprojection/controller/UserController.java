@@ -1,11 +1,15 @@
 package com.mprojection.controller;
 
+import com.mprojection.entity.AttackInfo;
 import com.mprojection.entity.FullUserInfo;
 import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.exception.DAOException;
+import com.mprojection.serializer.JSONSerializer;
+import com.mprojection.serializer.StreamSerializer;
 import com.mprojection.service.UserService;
 import com.mprojection.util.ErrorInfo;
 import com.mprojection.util.PushManagerUtil;
+import com.mprojection.util.Translator;
 import com.mprojection.util.measureunit.MeasureUnit;
 import com.mprojection.weather.SunInfo;
 import com.mprojection.weather.Weather;
@@ -15,6 +19,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 @RestController
@@ -30,6 +36,12 @@ public class UserController {
 
     @Autowired
     private PushManagerUtil pushManagerUtil;
+
+    @Autowired
+    private Translator translator;
+
+    private StreamSerializer serializer = new JSONSerializer();
+
 
     @RequestMapping(value = "{id}/abilities/", method = RequestMethod.GET)
     public FullUserInfo updateAbilities(@PathVariable int id, Integer measureUnit, String timeZone) {
@@ -76,11 +88,11 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/attack/{targetId}", method = RequestMethod.GET)
     public PublicUserInfo attack(@PathVariable long id, @PathVariable long targetId) {
-        PublicUserInfo userInfo1 = userService.getPublicInfo(id);
-        PublicUserInfo userInfo2 = userService.getPublicInfo(targetId);
-        PublicUserInfo user2 = userService.attack(userInfo1, userInfo2);
-        sendPushToAttackedUser(user2);
-        return user2;
+        PublicUserInfo attacker = userService.getPublicInfo(id);
+        PublicUserInfo target = userService.getPublicInfo(targetId);
+        PublicUserInfo victim = userService.attack(attacker, target);
+        sendPushToAttackedUser(victim, attacker);
+        return victim;
     }
 
     @ExceptionHandler({DAOException.class})
@@ -88,8 +100,17 @@ public class UserController {
         return new ErrorInfo(request.getRequestURL().toString(), exception.getCause());
     }
 
-    private void sendPushToAttackedUser(PublicUserInfo user) {
-        pushManagerUtil.send("", "");
+    private void sendPushToAttackedUser(PublicUserInfo victim, PublicUserInfo attacker) {
+        String messageBody = serialize(new AttackInfo(victim, attacker));
+        String messageTitle = translator.translate("push.youWasAttacked.title", victim.getLang());
+        pushManagerUtil.send(victim.getAppleToken(), messageTitle, messageBody);
     }
+
+    private String serialize(Object o) {
+        OutputStream stream = new ByteArrayOutputStream();
+        serializer.serialize(stream, o);
+        return stream.toString();
+    }
+
 
 }

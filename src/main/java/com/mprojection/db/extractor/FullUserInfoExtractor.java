@@ -14,7 +14,6 @@ public class FullUserInfoExtractor implements Extractor<FullUserInfo> {
         FullUserInfo user = new FullUserInfo();
         PublicUserInfoExtractor.setPublicInfo(user, rs);
         user.setFacebookToken(rs.getString("facebookToken"));
-        user.setAppleToken(rs.getString("appleToken"));
         user.setXp(rs.getInt("xp"));
         user.setOnline(rs.getBoolean("isOnline"));
         user.setDead(rs.getBoolean("isDead"));

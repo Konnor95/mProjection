@@ -8,6 +8,8 @@ public class PublicUserInfo extends Entity {
     private String firstName;
     private String lastName;
     private String login;
+    private String appleToken;
+    private String lang;
     private double lat;
     private double lng;
     private int hp;
@@ -43,6 +45,26 @@ public class PublicUserInfo extends Entity {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getAppleToken() {
+        return appleToken;
+    }
+
+    public void setAppleToken(String appleToken) {
+        this.appleToken = appleToken;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public void setType(short type) {
+        this.type = type;
     }
 
     public double getLat() {

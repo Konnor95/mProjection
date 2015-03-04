@@ -7,7 +7,6 @@ import java.util.List;
 public class FullUserInfo extends PublicUserInfo {
 
     private String facebookToken;
-    private String appleToken;
     private int xp;
     private boolean isOnline;
     private boolean isDead;
@@ -19,14 +18,6 @@ public class FullUserInfo extends PublicUserInfo {
 
     public void setFacebookToken(String facebookToken) {
         this.facebookToken = facebookToken;
-    }
-
-    public String getAppleToken() {
-        return appleToken;
-    }
-
-    public void setAppleToken(String appleToken) {
-        this.appleToken = appleToken;
     }
 
     public int getXp() {

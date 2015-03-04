@@ -136,6 +136,7 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         ps.setString(++index, user.getLogin());
         ps.setString(++index, user.getFacebookToken());
         ps.setString(++index, user.getAppleToken());
+        ps.setString(++index, user.getLang());
         index = setLocation(ps, index, user.getLat(), user.getLng());
         ps.setInt(++index, user.getHp());
         ps.setInt(++index, user.getXp());

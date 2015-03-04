@@ -20,6 +20,8 @@ public class PublicUserInfoExtractor implements Extractor<PublicUserInfo> {
         user.setFirstName(rs.getString("firstName"));
         user.setLastName(rs.getString("lastName"));
         user.setLogin(rs.getString("login"));
+        user.setAppleToken(rs.getString("appleToken"));
+        user.setLang(rs.getString("lang"));
         user.setLat(rs.getDouble("lat"));
         user.setLng(rs.getDouble("lng"));
         user.setHp(rs.getInt("hp"));

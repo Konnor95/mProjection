@@ -37,7 +37,8 @@ CREATE TABLE users (
   lastName                 VARCHAR(1000)         NOT NULL,
   login                    VARCHAR(200)          NOT NULL,
   facebookToken            VARCHAR(200)                   DEFAULT NULL UNIQUE,
-  appleToken               VARCHAR(200)                   DEFAULT NULL UNIQUE,
+  appleToken               VARCHAR(200)                   DEFAULT NULL,
+  lang                     VARCHAR(10)           NOT NULL,
   lat                      DOUBLE PRECISION      NOT NULL CHECK (lat > -90 AND lat <= 90),
   lng                      DOUBLE PRECISION      NOT NULL CHECK (lng > -180 AND lng <= 180),
   location                 GEOMETRY(POINT, 4326) NOT NULL,
@@ -75,6 +76,8 @@ CREATE VIEW users_public AS
     firstName,
     lastName,
     login,
+    appleToken,
+    lang,
     lat,
     lng,
     location,
@@ -91,11 +94,14 @@ CREATE VIEW users_public AS
   WHERE isDead = FALSE AND isOnline = TRUE;
 
 
-INSERT INTO users (firstName, lastName, login, facebookToken, appleToken, lat, lng, location, hp, xp, type, visibility)
-VALUES ('Дмитрий1', 'Бекузаров1', 'Dima1', 'facebook1', 'apple1', 50.0260317, 36.2249179,
+INSERT INTO users (firstName, lastName, login, facebookToken, appleToken, lang, lat, lng, location, hp, xp, type, visibility)
+VALUES ('Дмитрий1', 'Бекузаров1', 'Dima1', 'facebook1',
+        '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260317, 36.2249179,
         'SRID=4326;POINT(36.2249179 50.0260317)', 100, 1000, 0, 50),
-  ('Дмитрий2', 'Бекузаров2', 'Dima2', 'facebook2', 'apple2', 50.0260313, 36.2249173,
+  ('Дмитрий2', 'Бекузаров2', 'Dima2', 'facebook2',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'ru', 50.0260313, 36.2249173,
    'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1, 25),
-  ('Дмитрий3', 'Бекузаров3', 'Dima3', 'facebook3', 'apple3', 50.0260613, 36.2249473,
+  ('Дмитрий3', 'Бекузаров3', 'Dima3', 'facebook3',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260613, 36.2249473,
    'SRID=4326;POINT(36.2249473 50.0260613)', 100, 0, 2, 100);
 ;

@@ -35,14 +35,15 @@ public class PushManagerUtil {
     }
 
 
-    public void send(String token, String jsonString) {
+    public void send(String token, String body, String jsonString) {
         final byte[] tokenBytes;
         try {
-            tokenBytes = TokenUtil.tokenStringToByteArray(
-                    "<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>");
+            tokenBytes = TokenUtil.tokenStringToByteArray(token);
             final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
-            payloadBuilder.setAlertBody("Ring ring, Neo.");
+            payloadBuilder.addCustomProperty("data", jsonString);
+            payloadBuilder.setAlertBody(body);
             payloadBuilder.setSoundFileName("ring-ring.aiff");
+            payloadBuilder.setBadgeNumber(1);
             final String payload = payloadBuilder.buildWithDefaultMaximumLength();
             pushManager.getQueue().put(new SimpleApnsPushNotification(tokenBytes, payload));
         } catch (MalformedTokenStringException | InterruptedException e) {
@@ -54,6 +55,7 @@ public class PushManagerUtil {
     public void destroy() throws InterruptedException {
         pushManager.shutdown();
     }
+
     private class MyFailedConnectionListener implements FailedConnectionListener<SimpleApnsPushNotification> {
 
         @Override
