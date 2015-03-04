@@ -28,7 +28,7 @@ public class PushManagerUtil {
                 null, // Optional: custom ExecutorService for calling listeners
                 null, // Optional: custom BlockingQueue implementation
                 new PushManagerConfiguration(),
-                "MainPushManager");
+                "PushManager");
         pushManager.registerFailedConnectionListener(new MyFailedConnectionListener());
         pushManager.start();
 
