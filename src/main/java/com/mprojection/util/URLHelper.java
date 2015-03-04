@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * URLHelper
+ */
 public final class URLHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(URLHelper.class);
