@@ -41,7 +41,7 @@ public class UserController {
     private ObjectSerializer serializer = new JSONSerializer();
 
 
-    @RequestMapping(value = "{id}/abilities/", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/abilities/", method = RequestMethod.PUT)
     public FullUserInfo updateAbilities(@PathVariable int id, Integer measureUnit, String timeZone) {
         MeasureUnit unit = MeasureUnit.define(measureUnit);
         FullUserInfo user = userService.get(id, unit);
@@ -82,7 +82,7 @@ public class UserController {
         return userService.addAbility(id, MeasureUnit.define(measureUnit), abilityId);
     }
 
-    @RequestMapping(value = "/{id}/attack/{targetId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/attack/{targetId}/", method = RequestMethod.POST)
     public PublicUserInfo attack(@PathVariable long id, @PathVariable long targetId) {
         PublicUserInfo attacker = userService.getPublicInfo(id);
         PublicUserInfo target = userService.getPublicInfo(targetId);
