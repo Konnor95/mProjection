@@ -4,7 +4,7 @@ package com.mprojection.serializer;
  * {@code SerializerException} is thrown by {@code StreamSerializer}
  * when it cannot serialize or deserialize object or list of objects.
  *
- * @see StreamSerializer
+ * @see ObjectSerializer
  */
 public class SerializerException extends RuntimeException {
 

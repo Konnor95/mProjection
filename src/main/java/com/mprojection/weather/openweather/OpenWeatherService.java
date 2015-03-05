@@ -2,7 +2,7 @@ package com.mprojection.weather.openweather;
 
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import com.mprojection.serializer.JSONSerializer;
-import com.mprojection.serializer.StreamSerializer;
+import com.mprojection.serializer.ObjectSerializer;
 import com.mprojection.util.ArrayUtil;
 import com.mprojection.util.URLHelper;
 import com.mprojection.util.measureunit.MeasureUnit;
@@ -19,7 +19,7 @@ import java.io.InputStream;
 public final class OpenWeatherService implements WeatherService {
 
     private static final String API_KEY = WeatherConfig.getProperty("openweathermap.key");
-    private static final StreamSerializer serializer = new JSONSerializer();
+    private static final ObjectSerializer serializer = new JSONSerializer();
 
     @Override
     public Weather getCurrentWeather(double lat, double lng, MeasureUnit measureUnit, String timeZone) {

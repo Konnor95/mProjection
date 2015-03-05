@@ -2,7 +2,7 @@ import com.mprojection.entity.FullUserInfo;
 import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.entity.UserType;
 import com.mprojection.serializer.JSONSerializer;
-import com.mprojection.serializer.StreamSerializer;
+import com.mprojection.serializer.ObjectSerializer;
 import com.mprojection.weather.Weather;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class UserControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
-    private StreamSerializer serializer;
+    private ObjectSerializer serializer;
 
 
     @Before

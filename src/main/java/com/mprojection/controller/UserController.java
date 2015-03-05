@@ -5,7 +5,7 @@ import com.mprojection.entity.FullUserInfo;
 import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.exception.DAOException;
 import com.mprojection.serializer.JSONSerializer;
-import com.mprojection.serializer.StreamSerializer;
+import com.mprojection.serializer.ObjectSerializer;
 import com.mprojection.service.UserService;
 import com.mprojection.util.ErrorInfo;
 import com.mprojection.util.PushManagerUtil;
@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 @RestController
@@ -40,7 +38,7 @@ public class UserController {
     @Autowired
     private Translator translator;
 
-    private StreamSerializer serializer = new JSONSerializer();
+    private ObjectSerializer serializer = new JSONSerializer();
 
 
     @RequestMapping(value = "{id}/abilities/", method = RequestMethod.GET)
@@ -76,8 +74,6 @@ public class UserController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public FullUserInfo update(@RequestBody FullUserInfo user, Integer measureUnit) {
-        FullUserInfo existingUser = userService.get(user.getId(), MeasureUnit.INTERNAL);
-
         return userService.updateAndReturn(user, MeasureUnit.define(measureUnit));
     }
 
@@ -86,7 +82,7 @@ public class UserController {
         return userService.addAbility(id, MeasureUnit.define(measureUnit), abilityId);
     }
 
-    @RequestMapping(value = "/{id}/attack/{targetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/attack/{targetId}", method = RequestMethod.POST)
     public PublicUserInfo attack(@PathVariable long id, @PathVariable long targetId) {
         PublicUserInfo attacker = userService.getPublicInfo(id);
         PublicUserInfo target = userService.getPublicInfo(targetId);
@@ -101,16 +97,9 @@ public class UserController {
     }
 
     private void sendPushToAttackedUser(PublicUserInfo victim, PublicUserInfo attacker) {
-        String messageBody = serialize(new AttackInfo(victim, attacker));
+        String messageBody = serializer.serialize(new AttackInfo(victim, attacker));
         String messageTitle = translator.translate("push.youWasAttacked.title", victim.getLang());
         pushManagerUtil.send(victim.getAppleToken(), messageTitle, messageBody);
     }
-
-    private String serialize(Object o) {
-        OutputStream stream = new ByteArrayOutputStream();
-        serializer.serialize(stream, o);
-        return stream.toString();
-    }
-
 
 }

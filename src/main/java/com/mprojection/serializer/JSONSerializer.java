@@ -4,11 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-public final class JSONSerializer implements StreamSerializer {
+public final class JSONSerializer implements ObjectSerializer {
 
     private static final String CONTENT_TYPE = "application/json";
     private static final Logger LOGGER = LoggerFactory.getLogger(JSONSerializer.class);
@@ -27,6 +28,13 @@ public final class JSONSerializer implements StreamSerializer {
             LOGGER.warn("Cannot serialize object.", e);
             throw new SerializerException("Cannot serialize object", e);
         }
+    }
+
+    @Override
+    public String serialize(Object o) {
+        OutputStream stream = new ByteArrayOutputStream();
+        serialize(stream, o);
+        return stream.toString();
     }
 
     @Override

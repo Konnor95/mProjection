@@ -1,7 +1,7 @@
 import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.entity.UserType;
 import com.mprojection.serializer.JSONSerializer;
-import com.mprojection.serializer.StreamSerializer;
+import com.mprojection.serializer.ObjectSerializer;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,7 +14,7 @@ public class UserTest {
 
     @Test
     public void test() {
-        StreamSerializer serializer = new JSONSerializer();
+        ObjectSerializer serializer = new JSONSerializer();
         PublicUserInfo user = new PublicUserInfo();
         user.setId(1);
         user.setType(UserType.ZOMBIE);
@@ -25,13 +25,13 @@ public class UserTest {
         System.out.println(user2.isZombie());
     }
 
-    private String serialize(StreamSerializer serializer, Object o) {
+    private String serialize(ObjectSerializer serializer, Object o) {
         OutputStream stream = new ByteArrayOutputStream();
         serializer.serialize(stream, o);
         return stream.toString();
     }
 
-    private <T> T deserialize(StreamSerializer serializer, String s, Class<T> c) {
+    private <T> T deserialize(ObjectSerializer serializer, String s, Class<T> c) {
         InputStream stream = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
         return serializer.deserialize(stream, c);
     }

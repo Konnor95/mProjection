@@ -8,7 +8,7 @@ import java.util.List;
  * Provides functionality for serialization in {@link java.io.OutputStream}
  * and deserialization from {@link java.io.InputStream}
  */
-public interface StreamSerializer {
+public interface ObjectSerializer {
 
     /**
      * Returns a content type of the serialized object
@@ -25,6 +25,15 @@ public interface StreamSerializer {
      * @throws SerializerException if cannot serialize
      */
     void serialize(OutputStream stream, Object o);
+
+    /**
+     * Serializes object to the string.
+     *
+     * @param o object to serialize
+     * @return serialized object as string
+     */
+    String serialize(Object o);
+
 
     /**
      * Serializes the list of objects and writes them to the {@code stream}
