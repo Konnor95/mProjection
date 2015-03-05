@@ -2,14 +2,12 @@ package com.mprojection.util;
 
 import com.mprojection.db.DatabaseConfig;
 import com.relayrides.pushy.apns.ApnsEnvironment;
-import com.relayrides.pushy.apns.FailedConnectionListener;
 import com.relayrides.pushy.apns.PushManager;
 import com.relayrides.pushy.apns.PushManagerConfiguration;
 import com.relayrides.pushy.apns.util.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -29,7 +27,6 @@ public class PushManagerUtil {
                 null, // Optional: custom BlockingQueue implementation
                 new PushManagerConfiguration(),
                 "PushManager");
-        pushManager.registerFailedConnectionListener(new MyFailedConnectionListener());
         pushManager.start();
 
     }
@@ -55,25 +52,5 @@ public class PushManagerUtil {
     public void destroy() throws InterruptedException {
         pushManager.shutdown();
     }
-
-    private class MyFailedConnectionListener implements FailedConnectionListener<SimpleApnsPushNotification> {
-
-        @Override
-        public void handleFailedConnection(
-                final PushManager<? extends SimpleApnsPushNotification> pushManager,
-                final Throwable cause) {
-
-            if (cause instanceof SSLHandshakeException) {
-                try {
-                    pushManager.shutdown();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-// ...
-
 
 }
