@@ -16,7 +16,7 @@ public class HomeController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Translation index() {
-        String s = translator.translate("ability.zombie.attack.power.name");
+        String s = translator.translate("ability.zombie.attack.power.name", "en");
         return new Translation(s, s);
     }
 }

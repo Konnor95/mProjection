@@ -48,7 +48,7 @@ public class UserService {
 
     public FullUserInfo get(long id, MeasureUnit measureUnit) {
         FullUserInfo user = repository.getById(id);
-        List<UserAbility> userAbilities = abilities.define(user.getType(), getAbilitiesIds(id), measureUnit);
+        List<UserAbility> userAbilities = abilities.define(user.getType(), getAbilitiesIds(id), measureUnit, user.getLang());
         user.setAbilities(userAbilities);
         return user;
     }
@@ -66,10 +66,10 @@ public class UserService {
         FullUserInfo user = get(userId, measureUnit);
         UserAbility userAbility = abilities.define(user, abilityId);
         if (userAbility == null) {
-            throw new LogicalException(translator.translate("exception.logical.ability.notFound"));
+            throw new LogicalException(translator.translate("exception.logical.ability.notFound", user.getLang()));
         }
         if (userAbility.isAvailable()) {
-            throw new LogicalException(translator.translate("exception.logical.ability.isAlreadyAvailable"));
+            throw new LogicalException(translator.translate("exception.logical.ability.isAlreadyAvailable", user.getLang()));
         }
         Ability ability = abilities.define(user.getType(), abilityId);
         ability.apply(user, translator);

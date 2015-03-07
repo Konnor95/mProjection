@@ -15,10 +15,10 @@ public class UserAbility {
     private int price;
     private List<UserAbility> next = new ArrayList<>();
 
-    public UserAbility(Ability ability, List<String> ids, Translator translator, MeasureUnit measureUnit) {
+    public UserAbility(Ability ability, List<String> ids, Translator translator, MeasureUnit measureUnit, String locale) {
         id = ability.getId();
-        name = ability.getName(translator);
-        description = ability.getDescription(translator, measureUnit);
+        name = ability.getName(translator, locale);
+        description = ability.getDescription(translator, measureUnit, locale);
         isAvailable = ability.isAvailableByDefault() || ids.contains(id);
         price = ability.getPrice();
         List<Ability> nextAbilities = ability.getNext();
@@ -26,7 +26,7 @@ public class UserAbility {
             return;
         }
         for (Ability a : nextAbilities) {
-            next.add(new UserAbility(a, ids, translator, measureUnit));
+            next.add(new UserAbility(a, ids, translator, measureUnit, locale));
         }
     }
 

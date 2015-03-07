@@ -31,7 +31,7 @@ public enum MeasureUnit {
         return converter;
     }
 
-    public String getDistanceUnit(Translator translator) {
-        return translator.translate(distanceUnit);
+    public String getDistanceUnit(Translator translator, String locale) {
+        return translator.translate(distanceUnit, locale);
     }
 }

@@ -40,12 +40,12 @@ public abstract class Ability {
         }
     }
 
-    public String getName(Translator translator) {
-        return translator.translate(nameKey);
+    public String getName(Translator translator, String locale) {
+        return translator.translate(nameKey, locale);
     }
 
-    public String getDescription(Translator translator, MeasureUnit measureUnit) {
-        return formatDescription(translator, translator.translate(descriptionKey), measureUnit);
+    public String getDescription(Translator translator, MeasureUnit measureUnit, String locale) {
+        return formatDescription(translator, translator.translate(descriptionKey, locale), measureUnit, locale);
     }
 
     public int getPrice() {
@@ -62,7 +62,7 @@ public abstract class Ability {
     }
 
     @SuppressWarnings("unused")
-    protected String formatDescription(Translator translator, String description, MeasureUnit measureUnit) {
+    protected String formatDescription(Translator translator, String description, MeasureUnit measureUnit, String locale) {
         return description;
     }
 
@@ -72,7 +72,7 @@ public abstract class Ability {
     public void apply(FullUserInfo user, Translator translator) {
         int left = user.getXp() - price;
         if (left < 0) {
-            throw new LogicalException(translator.translate("exception.logical.ability.insufficientFunds"));
+            throw new LogicalException(translator.translate("exception.logical.ability.insufficientFunds", user.getLang()));
         }
         user.setXp(left);
     }

@@ -42,10 +42,10 @@ public class Abilities {
     }
 
 
-    public List<UserAbility> define(UserType userType, List<String> ids, MeasureUnit measureUnit) {
+    public List<UserAbility> define(UserType userType, List<String> ids, MeasureUnit measureUnit, String locale) {
         List<UserAbility> userAbilities = new ArrayList<>();
         for (Ability ability : abilities.get(userType)) {
-            userAbilities.add(new UserAbility(ability, ids, translator, measureUnit));
+            userAbilities.add(new UserAbility(ability, ids, translator, measureUnit, locale));
         }
         return userAbilities;
     }

@@ -34,10 +34,10 @@ public class ImprovedTracker extends Ability {
     }
 
     @Override
-    protected String formatDescription(Translator translator, String description, MeasureUnit measureUnit) {
+    protected String formatDescription(Translator translator, String description, MeasureUnit measureUnit, String locale) {
         MeasureUnitConverter converter = measureUnit.getConverter();
         int distance = converter.convertDistance(RANGE);
-        return String.format(description, distance, measureUnit.getDistanceUnit(translator));
+        return String.format(description, distance, measureUnit.getDistanceUnit(translator, locale));
     }
 
 }

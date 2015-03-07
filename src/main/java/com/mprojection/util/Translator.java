@@ -27,16 +27,16 @@ public class Translator {
         }
     }
 
-    /**
-     * Gets a translation for the specified {@code key} .
-     *
-     * @param key key to look for
-     * @return found translation
-     */
-    public String translate(String key) {
-        ResourceBundle bundle = resourceBundles.get(getLocale());
-        return bundle.getString(key);
-    }
+//    /**
+//     * Gets a translation for the specified {@code key} .
+//     *
+//     * @param key key to look for
+//     * @return found translation
+//     */
+//    public String translate(String key) {
+//        ResourceBundle bundle = resourceBundles.get(getLocale());
+//        return bundle.getString(key);
+//    }
 
     public String translate(String key, String locale) {
         ResourceBundle bundle = resourceBundles.get(locale);

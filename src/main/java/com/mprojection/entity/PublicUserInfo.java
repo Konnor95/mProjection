@@ -182,12 +182,10 @@ public class PublicUserInfo extends Entity {
         this.sunDefenseFactor = sunDefenseFactor;
     }
 
-    @JsonIgnore
     public Double getDistance() {
         return distance;
     }
 
-    @JsonIgnore
     public void setDistance(Double distance) {
         this.distance = distance;
     }
