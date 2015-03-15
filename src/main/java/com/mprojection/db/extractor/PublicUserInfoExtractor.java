@@ -19,6 +19,7 @@ public class PublicUserInfoExtractor implements Extractor<PublicUserInfo> {
         user.setId(rs.getLong("id"));
         user.setFirstName(rs.getString("firstName"));
         user.setLastName(rs.getString("lastName"));
+        user.setGender(rs.getBoolean("gender"));
         user.setLogin(rs.getString("login"));
         user.setAppleToken(rs.getString("appleToken"));
         user.setLang(rs.getString("lang"));
@@ -27,12 +28,12 @@ public class PublicUserInfoExtractor implements Extractor<PublicUserInfo> {
         user.setHp(rs.getInt("hp"));
         user.setType(UserType.define(rs.getShort("type")));
         user.setVisibility(rs.getInt("visibility"));
-        user.setAbilityAttackFactor(rs.getFloat("abilityAttackFactor"));
-        user.setAbilityDefenseFactor(rs.getFloat("abilityDefenseFactor"));
-        user.setTemperatureAttackFactor(rs.getFloat("temperatureAttackFactor"));
-        user.setTemperatureDefenseFactor(rs.getFloat("temperatureDefenseFactor"));
-        user.setSunAttackFactor(rs.getFloat("sunAttackFactor"));
-        user.setSunDefenseFactor(rs.getFloat("sunDefenseFactor"));
+        user.setAttack(rs.getInt("attack"));
+        user.setDefense(rs.getInt("defense"));
+        user.setAttackFactor(rs.getFloat("attackFactor"));
+        user.setDefenseFactor(rs.getFloat("defenseFactor"));
+        user.setVisibilityFactor(rs.getFloat("visibilityFactor"));
+        user.setHealthFactor(rs.getFloat("healthFactor"));
         Double dist;
         try {
             dist = rs.getDouble("dist");

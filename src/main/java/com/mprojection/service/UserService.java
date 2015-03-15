@@ -80,7 +80,7 @@ public class UserService {
     }
 
     public PublicUserInfo attack(PublicUserInfo user1, PublicUserInfo user2) {
-        int damage = (int) (user1.getAttackFactor() * 2 - user2.getDefenseFactor());
+        int damage = (int) (user1.getAttack() * user1.getAttackFactor() - user2.getDefense() * user2.getDefenseFactor());
         if (damage < 0) {
             damage = 0;
         }

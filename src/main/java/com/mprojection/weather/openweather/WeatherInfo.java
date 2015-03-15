@@ -2,16 +2,16 @@ package com.mprojection.weather.openweather;
 
 public final class WeatherInfo {
 
-    private Long id;
+    private Integer id;
     private String main;
     private String description;
     private String icon;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

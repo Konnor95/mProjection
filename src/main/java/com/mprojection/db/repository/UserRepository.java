@@ -133,6 +133,7 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         int index = 0;
         ps.setString(++index, user.getFirstName());
         ps.setString(++index, user.getLastName());
+        ps.setBoolean(++index, user.isGender());
         ps.setString(++index, user.getLogin());
         ps.setString(++index, user.getFacebookToken());
         ps.setString(++index, user.getAppleToken());
@@ -144,6 +145,12 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         int defaultVisibility = user.getType().getDefaultVisibility();
         int visibility = user.getVisibility() < defaultVisibility ? defaultVisibility : user.getVisibility();
         ps.setInt(++index, visibility);
+        int defaultAttack = user.getType().getDefaultAttack();
+        int attack = user.getAttack() < defaultAttack ? defaultAttack : user.getAttack();
+        ps.setInt(++index, attack);
+        int defaultDefense = user.getType().getDefaultDefense();
+        int defense = user.getDefense() < defaultDefense ? defaultDefense : user.getDefense();
+        ps.setInt(++index, defense);
         return index;
     }
 
@@ -160,12 +167,10 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         int index = prepareForInsert(user, ps);
         ps.setBoolean(++index, user.isOnline());
         ps.setBoolean(++index, user.isDead());
-        ps.setFloat(++index, user.getAbilityAttackFactor());
-        ps.setFloat(++index, user.getAbilityDefenseFactor());
-        ps.setFloat(++index, user.getTemperatureAttackFactor());
-        ps.setFloat(++index, user.getTemperatureDefenseFactor());
-        ps.setFloat(++index, user.getSunAttackFactor());
-        ps.setFloat(++index, user.getSunDefenseFactor());
+        ps.setDouble(++index, user.getAttackFactor());
+        ps.setDouble(++index, user.getDefenseFactor());
+        ps.setDouble(++index, user.getVisibilityFactor());
+        ps.setDouble(++index, user.getHealthFactor());
         ps.setLong(++index, user.getId());
         return index;
     }

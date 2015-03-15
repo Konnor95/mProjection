@@ -1,8 +1,10 @@
 package com.mprojection.weather.openweather;
 
+import com.mprojection.util.measureunit.MeasureUnit;
 import com.mprojection.weather.Weather;
 import com.mprojection.weather.WeatherWrapper;
-import com.mprojection.util.measureunit.MeasureUnit;
+
+import java.util.Arrays;
 
 public final class CurrentOpenWeatherWrapper implements WeatherWrapper {
 
@@ -127,7 +129,16 @@ public final class CurrentOpenWeatherWrapper implements WeatherWrapper {
     @Override
     public Weather toWeather(MeasureUnit measureUnit) {
         Weather w = new Weather();
-        w.setTemperature((int) main.getTemp());
+        w.setTemperature(measureUnit.getConverter().convertTemperature((int) main.getTemp()));
+        int[] codes = new int[weather.length];
+        for (int i = 0; i < weather.length; i++) {
+            codes[i] = weather[i].getId();
+        }
+        System.out.println(Arrays.toString(codes));
+        w.setLowVisibility(WeatherCondition.isLowVisibility(codes));
+        w.setRain(WeatherCondition.isRain(codes));
+        w.setSnow(WeatherCondition.isSnow(codes));
+        w.setCloudy(WeatherCondition.isCloudy(codes));
         return w;
     }
 }

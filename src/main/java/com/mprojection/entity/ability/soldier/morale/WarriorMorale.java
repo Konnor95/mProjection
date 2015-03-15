@@ -10,7 +10,8 @@ import java.util.List;
 public class WarriorMorale extends Ability {
 
     private static final List<Ability> NEXT = new ArrayList<>();
-    private static final float ATTACK_FACTOR = 1f;
+    private static final int ATTACK = 10;
+    private static final int DEFENSE = 10;
 
     static {
         NEXT.add(new KillerMorale());
@@ -29,6 +30,7 @@ public class WarriorMorale extends Ability {
     @Override
     public void apply(FullUserInfo user, Translator translator) {
         super.apply(user, translator);
-        user.setAbilityAttackFactor(ATTACK_FACTOR);
+        user.setAttack(ATTACK);
+        user.setDefense(DEFENSE);
     }
 }

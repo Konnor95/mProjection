@@ -5,70 +5,87 @@ import com.mprojection.weather.Weather;
 
 public enum UserType {
 
-    SOLDIER(50, 100) {
+    SOLDIER(50, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
-            if (sunInfo.isNight()) {
-                user.setSunDefenseFactor(0.75f);
-            }
-            if (sunInfo.isDay()) {
-                user.setSunDefenseFactor(1f);
-            }
+            double attackFactor = 1;
+            double defenseFactor = 1;
+            int visibilityFactor = 1;
+            int healthFactor = 1;
+            defenseFactor *= sunInfo.isNight() ? 0.75 : 1;
             if (weather.getTemperature() < -20) {
-                user.setTemperatureAttackFactor(0.85f);
-                user.setTemperatureDefenseFactor(0.65f);
+                attackFactor *= 0.85;
+                defenseFactor *= 0.65;
             } else {
-                user.setTemperatureAttackFactor(1f);
-                user.setTemperatureDefenseFactor(DEFAULT_DEFENSE);
+                attackFactor *= 1;
+                defenseFactor *= DEFAULT_DEFENSE;
             }
+            visibilityFactor *= weather.isCloudy() || weather.isLowVisibility() ? 0.8 : 1;
+            healthFactor *= weather.isRain() || weather.isSnow() ? 0.8 : 1;
+            user.setAttackFactor(attackFactor);
+            user.setDefenseFactor(defenseFactor);
+            user.setVisibilityFactor(visibilityFactor);
+            user.setHealthFactor(healthFactor);
         }
     },
-    SCIENTIST(25, 100) {
+    SCIENTIST(25, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
-            if (sunInfo.isNight()) {
-                user.setSunDefenseFactor(0.75f);
-            }
-            if (sunInfo.isDay()) {
-                user.setSunDefenseFactor(1f);
-            }
+            double attackFactor = 1;
+            double defenseFactor = 1;
+            int visibilityFactor = 1;
+            int healthFactor = 1;
+            defenseFactor *= sunInfo.isNight() ? 0.75 : 1;
             if (weather.getTemperature() < -20) {
-                user.setTemperatureAttackFactor(0.85f);
-                user.setTemperatureDefenseFactor(0.65f);
+                attackFactor *= 0.85;
+                defenseFactor *= 0.65;
             } else {
-                user.setTemperatureAttackFactor(1f);
-                user.setTemperatureDefenseFactor(DEFAULT_DEFENSE);
+                attackFactor *= 1;
+                defenseFactor *= DEFAULT_DEFENSE;
             }
+            visibilityFactor *= weather.isCloudy() || weather.isLowVisibility() ? 0.8 : 1;
+            healthFactor *= weather.isRain() || weather.isSnow() ? 0.8 : 1;
+            user.setAttackFactor(attackFactor);
+            user.setDefenseFactor(defenseFactor);
+            user.setVisibilityFactor(visibilityFactor);
+            user.setHealthFactor(healthFactor);
         }
     },
-    ZOMBIE(100, 100) {
+    ZOMBIE(100, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
-            if (sunInfo.isNight()) {
-                user.setSunAttackFactor(1.2f);
-                user.setSunDefenseFactor(1f);
-            }
-            if (sunInfo.isDay()) {
-                user.setSunAttackFactor(1f);
-                user.setSunDefenseFactor(1f);
-            }
-            if (weather.getTemperature() < 0) {
-                user.setTemperatureAttackFactor(0.85f);
-                user.setTemperatureDefenseFactor(0.65f);
+            double attackFactor = 1;
+            double defenseFactor = 1;
+            int visibilityFactor = 1;
+            int healthFactor = 1;
+            defenseFactor *= sunInfo.isNight() ? 1.2 : 1;
+            if (weather.getTemperature() < -10 || weather.getTemperature() > 35) {
+                attackFactor *= 0.85;
+                defenseFactor *= 0.65;
             } else {
-                user.setTemperatureAttackFactor(DEFAULT_DEFENSE);
-                user.setTemperatureDefenseFactor(DEFAULT_DEFENSE);
+                attackFactor *= 1;
+                defenseFactor *= DEFAULT_DEFENSE;
             }
+            visibilityFactor *= weather.isCloudy() || weather.isLowVisibility() ? 0.8 : 1;
+            healthFactor *= weather.isRain() || weather.isSnow() ? 0.8 : 1;
+            user.setAttackFactor(attackFactor);
+            user.setDefenseFactor(defenseFactor);
+            user.setVisibilityFactor(visibilityFactor);
+            user.setHealthFactor(healthFactor);
         }
     };
 
     private static final float DEFAULT_DEFENSE = 0.8f;
     private int defaultVisibility;
     private int defaultHp;
+    private int defaultAttack;
+    private int defaultDefense;
 
-    UserType(int defaultVisibility, int defaultHp) {
+    UserType(int defaultVisibility, int defaultHp, int defaultAttack, int defaultDefense) {
         this.defaultVisibility = defaultVisibility;
         this.defaultHp = defaultHp;
+        this.defaultAttack = defaultAttack;
+        this.defaultDefense = defaultDefense;
     }
 
     public static UserType define(int type) {
@@ -93,6 +110,14 @@ public enum UserType {
 
     public int getDefaultHp() {
         return defaultHp;
+    }
+
+    public int getDefaultAttack() {
+        return defaultAttack;
+    }
+
+    public int getDefaultDefense() {
+        return defaultDefense;
     }
 
     public abstract void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo);

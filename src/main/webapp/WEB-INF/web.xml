@@ -7,9 +7,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:/appContext.xml
-        </param-value>
+        <param-value>classpath:/appContext.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -51,6 +49,9 @@
         <url-pattern>*.svg</url-pattern>
         <url-pattern>*.json</url-pattern>
         <url-pattern>*.xml</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.jpeg</url-pattern>
     </servlet-mapping>
 
 

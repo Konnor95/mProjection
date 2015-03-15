@@ -7,6 +7,7 @@ public class PublicUserInfo extends Entity {
 
     private String firstName;
     private String lastName;
+    private boolean gender;
     private String login;
     private String appleToken;
     private String lang;
@@ -15,12 +16,12 @@ public class PublicUserInfo extends Entity {
     private int hp;
     private short type;
     private int visibility;
-    private float abilityAttackFactor;
-    private float abilityDefenseFactor;
-    private float temperatureAttackFactor;
-    private float temperatureDefenseFactor;
-    private float sunAttackFactor;
-    private float sunDefenseFactor;
+    private int attack;
+    private int defense;
+    private double attackFactor;
+    private double defenseFactor;
+    private double visibilityFactor;
+    private double healthFactor;
     private Double distance;
 
     public String getFirstName() {
@@ -37,6 +38,14 @@ public class PublicUserInfo extends Entity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public String getLogin() {
@@ -122,64 +131,20 @@ public class PublicUserInfo extends Entity {
         this.visibility = visibility;
     }
 
-    @JsonIgnore
-    public float getAbilityAttackFactor() {
-        return abilityAttackFactor;
+    public int getAttack() {
+        return attack;
     }
 
-    @JsonIgnore
-    public void setAbilityAttackFactor(float abilityAttackFactor) {
-        this.abilityAttackFactor = abilityAttackFactor;
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
-    @JsonIgnore
-    public float getAbilityDefenseFactor() {
-        return abilityDefenseFactor;
+    public int getDefense() {
+        return defense;
     }
 
-    @JsonIgnore
-    public void setAbilityDefenseFactor(float abilityDefenseFactor) {
-        this.abilityDefenseFactor = abilityDefenseFactor;
-    }
-
-    @JsonIgnore
-    public float getTemperatureAttackFactor() {
-        return temperatureAttackFactor;
-    }
-
-    @JsonIgnore
-    public void setTemperatureAttackFactor(float temperatureAttackFactor) {
-        this.temperatureAttackFactor = temperatureAttackFactor;
-    }
-
-    @JsonIgnore
-    public float getTemperatureDefenseFactor() {
-        return temperatureDefenseFactor;
-    }
-
-    @JsonIgnore
-    public void setTemperatureDefenseFactor(float temperatureDefenseFactor) {
-        this.temperatureDefenseFactor = temperatureDefenseFactor;
-    }
-
-    @JsonIgnore
-    public float getSunAttackFactor() {
-        return sunAttackFactor;
-    }
-
-    @JsonIgnore
-    public void setSunAttackFactor(float sunAttackFactor) {
-        this.sunAttackFactor = sunAttackFactor;
-    }
-
-    @JsonIgnore
-    public float getSunDefenseFactor() {
-        return sunDefenseFactor;
-    }
-
-    @JsonIgnore
-    public void setSunDefenseFactor(float sunDefenseFactor) {
-        this.sunDefenseFactor = sunDefenseFactor;
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
     public Double getDistance() {
@@ -211,14 +176,35 @@ public class PublicUserInfo extends Entity {
 
     }
 
-    @JsonIgnore
-    public float getAttackFactor() {
-        return abilityAttackFactor * temperatureAttackFactor * sunAttackFactor;
+    public double getAttackFactor() {
+        return attackFactor;
     }
 
-    @JsonIgnore
-    public float getDefenseFactor() {
-        return abilityDefenseFactor * temperatureDefenseFactor * sunDefenseFactor;
+    public void setAttackFactor(double attackFactor) {
+        this.attackFactor = attackFactor;
     }
 
+    public double getDefenseFactor() {
+        return defenseFactor;
+    }
+
+    public void setDefenseFactor(double defenseFactor) {
+        this.defenseFactor = defenseFactor;
+    }
+
+    public double getVisibilityFactor() {
+        return visibilityFactor;
+    }
+
+    public void setVisibilityFactor(double visibilityFactor) {
+        this.visibilityFactor = visibilityFactor;
+    }
+
+    public double getHealthFactor() {
+        return healthFactor;
+    }
+
+    public void setHealthFactor(double healthFactor) {
+        this.healthFactor = healthFactor;
+    }
 }

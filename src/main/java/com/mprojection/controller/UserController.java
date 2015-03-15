@@ -40,7 +40,6 @@ public class UserController {
 
     private ObjectSerializer serializer = new JSONSerializer();
 
-
     @RequestMapping(value = "{id}/abilities/", method = RequestMethod.PUT)
     public FullUserInfo updateAbilities(@PathVariable int id, Integer measureUnit, String timeZone) {
         MeasureUnit unit = MeasureUnit.define(measureUnit);

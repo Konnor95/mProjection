@@ -10,7 +10,7 @@ import java.util.List;
 public class SimpleAttack extends Ability {
 
     private static final List<Ability> NEXT = new ArrayList<>();
-    private static final float ATTACK_FACTOR = 1f;
+    private static final int ATTACK = 1;
 
     static {
         NEXT.add(new PowerAttack());
@@ -29,6 +29,6 @@ public class SimpleAttack extends Ability {
     @Override
     public void apply(FullUserInfo user, Translator translator) {
         super.apply(user, translator);
-        user.setAbilityAttackFactor(ATTACK_FACTOR);
+        user.setAttack(ATTACK);
     }
 }

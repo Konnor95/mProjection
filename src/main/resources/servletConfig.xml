@@ -9,7 +9,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
     <mvc:annotation-driven/>
-
     <mvc:resources location="/assets/" mapping="/assets/**"/>
 
     <context:component-scan base-package="com.mprojection.controller"/>
@@ -26,8 +25,8 @@
           p:defaultEncoding="UTF-8"
           p:cacheSeconds="2"/>
 
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
-    <!--p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="2"/>-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+    p:prefix="/WEB-INF/pages/" p:suffix=".jsp" p:order="2"/>
 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
 
