@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="navigation">
-                    <a class="nav-button" target="_blank" href="https://youtu.be/dJwufJquqUs">view teaser</a>
+                    <a class="nav-button" target="_blank" href="http://youtu.be/xaEmzfCbuAE">view teaser</a>
                 </div>
             </div>
         </div>
