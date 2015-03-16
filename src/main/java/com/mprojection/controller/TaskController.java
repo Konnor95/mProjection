@@ -50,13 +50,18 @@ public class TaskController {
 
     @RequestMapping(value = "{userId}/{taskId}/", method = RequestMethod.POST)
     public UserTask addUserTask(@PathVariable long userId, @PathVariable String taskId, Integer measureUnit) {
-        FullUserInfo user = userService.get(userId, MeasureUnit.define(measureUnit));
+        FullUserInfo executor = userService.get(userId, MeasureUnit.define(measureUnit));
         Task task = tasks.define(taskId);
         task.setExecutor(userId);
         task.setTarget(taskManager);
         userService.addTask(task);
-        UserTask userTask = tasks.define(taskId, user.getLang());
-        sendTask(user, userTask);
+        UserTask userTask = tasks.define(taskId, executor.getLang());
+        UserTask userTask2 = new UserTask(userTask);
+        userTask2.setExecutor(userTask.getTarget());
+        userTask2.setTarget(userTask.getExecutor());
+        FullUserInfo target = userService.get(userId, MeasureUnit.define(measureUnit));
+        sendTask(executor, userTask);
+        sendTask(target, userTask2);
         return userTask;
     }
 

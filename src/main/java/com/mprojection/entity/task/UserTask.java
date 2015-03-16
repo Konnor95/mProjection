@@ -18,6 +18,14 @@ public class UserTask {
         target = task.getTarget();
     }
 
+    public UserTask(UserTask userTask) {
+        id = userTask.getId();
+        name = userTask.getName();
+        description = userTask.getDescription();
+        executor = userTask.getExecutor();
+        target = userTask.getTarget();
+    }
+
     public String getId() {
         return id;
     }
