@@ -75,6 +75,16 @@ CREATE TABLE user_abilities (
   ON UPDATE RESTRICT
 );
 
+CREATE TABLE user_tasks (
+  taskId    VARCHAR(100) NOT NULL,
+  userId    BIGINT       NOT NULL,
+  completed BOOLEAN      NOT NULL DEFAULT FALSE,
+  target    BIGINT       DEFAULT NULL ,
+  FOREIGN KEY (userId) REFERENCES users (id)
+  ON DELETE CASCADE
+  ON UPDATE RESTRICT
+);
+
 CREATE VIEW users_public AS
   SELECT
     id,
@@ -105,7 +115,7 @@ VALUES ('Dmytro', 'Bekuzarov', FALSE, 'Dima1', 'facebook1',
         '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260317, 36.2249179,
         'SRID=4326;POINT(36.2249179 50.0260317)', 100, 1000, 0, 50, 10, 5),
   ('Maria', 'Brown', TRUE, 'Maria', 'facebook2',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'ru', 50.0260313, 36.2249173,
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260313, 36.2249173,
    'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1, 25, 10, 5),
   ('Elsa', 'Frozen', TRUE, 'Frozen', 'facebook3',
    '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260613, 36.2249473,

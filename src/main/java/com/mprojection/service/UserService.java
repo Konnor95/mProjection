@@ -7,6 +7,9 @@ import com.mprojection.entity.PublicUserInfo;
 import com.mprojection.entity.ability.Abilities;
 import com.mprojection.entity.ability.Ability;
 import com.mprojection.entity.ability.UserAbility;
+import com.mprojection.entity.task.Task;
+import com.mprojection.entity.task.Tasks;
+import com.mprojection.entity.task.UserTask;
 import com.mprojection.exception.LogicalException;
 import com.mprojection.util.Translator;
 import com.mprojection.util.measureunit.MeasureUnit;
@@ -26,6 +29,9 @@ public class UserService {
 
     @Autowired
     private Translator translator;
+
+    @Autowired
+    private Tasks tasks;
 
     public FullUserInfo add(FullUserInfo user) {
         return repository.add(user);
@@ -91,6 +97,26 @@ public class UserService {
         user2.setHp(hp2);
         repository.update(user2);
         return user2;
+    }
+
+    public List<UserTask> getActiveTasks(FullUserInfo user) {
+        return tasks.define(repository.getActiveTasks(user.getId()), user.getLang());
+    }
+
+    public Task getActiveTask(FullUserInfo user, String taskId) {
+        return repository.getActiveTask(user.getId(), taskId);
+    }
+
+    public void addTask(Task task) {
+        repository.addTask(task);
+    }
+
+    public void completeTask(String taskId) {
+        repository.completeTask(taskId);
+    }
+
+    public PublicUserInfo findNearestUserOfDifferentGender(long userId) {
+        return repository.findNearestUserOfDifferentGender(userId);
     }
 
     private List<String> getAbilitiesIds(long id) {

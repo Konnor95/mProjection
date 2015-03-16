@@ -4,8 +4,10 @@ import com.mprojection.db.connection.ConnectionHolder;
 import com.mprojection.db.extractor.Extractor;
 import com.mprojection.db.extractor.FullUserInfoExtractor;
 import com.mprojection.db.extractor.PublicUserInfoExtractor;
+import com.mprojection.db.extractor.TaskExtractor;
 import com.mprojection.entity.FullUserInfo;
 import com.mprojection.entity.PublicUserInfo;
+import com.mprojection.entity.task.Task;
 import com.mprojection.exception.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
     private static final Extractor<PublicUserInfo> PUBLIC_USER_INFO_EXTRACTOR = new PublicUserInfoExtractor();
     private static final Extractor<FullUserInfo> FULL_USER_INFO_EXTRACTOR = new FullUserInfoExtractor();
 
+    @Autowired
+    private TaskExtractor taskExtractor;
 
     /**
      * Creates a new repository.
@@ -96,6 +100,29 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         }
     }
 
+    public List<Task> getActiveTasks(long userId) {
+        String sql = get("task.select.active");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setLong(1, userId);
+            return executeQuery(ps, taskExtractor);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    public Task getActiveTask(long userId, String taskId) {
+        String sql = get("task.select.active.by.id");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setLong(1, userId);
+            ps.setString(2, taskId);
+            return executeQuery(ps, taskExtractor).get(0);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
     public List<PublicUserInfo> getNearest(long userId) {
         PublicUserInfo user = getPublicInfoById(userId);
         String sql = get("user.select.nearest");
@@ -122,6 +149,48 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
             ps.setString(2, abilityId);
             ps.executeUpdate();
             return getById(userId);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    public void addTask(Task task) {
+        String sql = get("task.add");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, task.getId());
+            ps.setLong(2, task.getExecutor());
+            ps.setLong(3, task.getTarget());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    public void completeTask(String taskId) {
+        String sql = get("task.complete");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, taskId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
+    public PublicUserInfo findNearestUserOfDifferentGender(long userId) {
+        PublicUserInfo user = getPublicInfoById(userId);
+        String sql = get("user.findNearestUserOfDifferentGender");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setDouble(1, user.getLat());
+            ps.setDouble(2, user.getLng());
+            ps.setInt(3, user.getVisibility());
+            ps.setLong(4, user.getId());
+            ps.setBoolean(5, !user.isGender());
+            ps.setDouble(6, user.getLat());
+            ps.setDouble(7, user.getLng());
+            return executeQuery(ps, PUBLIC_USER_INFO_EXTRACTOR).get(0);
         } catch (SQLException e) {
             LOGGER.warn(ERROR_MESSAGE, sql, e);
             throw new DAOException(getMessage(sql), e);
