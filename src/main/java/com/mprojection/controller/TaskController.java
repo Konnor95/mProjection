@@ -13,6 +13,7 @@ import com.mprojection.util.Result;
 import com.mprojection.util.TaskManager;
 import com.mprojection.util.Translator;
 import com.mprojection.util.measureunit.MeasureUnit;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +57,7 @@ public class TaskController {
         task.setTarget(taskManager);
         userService.addTask(task);
         UserTask userTask = tasks.define(taskId, executor.getLang());
+        userTask.setHash(getHash(task.getExecutor(), task.getTarget()));
         UserTask userTask2 = new UserTask(userTask);
         userTask2.setExecutor(userTask.getTarget());
         userTask2.setTarget(userTask.getExecutor());
@@ -65,14 +67,25 @@ public class TaskController {
         return userTask;
     }
 
-    @RequestMapping(value = "{userId}/{taskId}/", method = RequestMethod.PUT)
-    public List<UserTask> completeTask(@PathVariable long userId, @PathVariable String taskId, Integer measureUnit) {
+    @RequestMapping(value = "{userId}/{taskId}/{hash}", method = RequestMethod.PUT)
+    public List<UserTask> completeTask(@PathVariable long userId, @PathVariable String taskId, @PathVariable String hash, Integer measureUnit) {
         FullUserInfo executor = userService.get(userId, MeasureUnit.define(measureUnit));
         Task task = userService.getActiveTask(executor, taskId);
+        if (!checkHash(getHash(task.getExecutor(), task.getTarget()), hash)) {
+            throw new IllegalArgumentException("Hash not match");
+        }
         userService.completeTask(task.getId());
         sendTaskCompleted(executor);
         sendOperationDone(userService.getPublicInfo(task.getTarget()));
         return userService.getActiveTasks(executor);
+    }
+
+    private boolean checkHash(String expectedHash, String hashToCheck) {
+        return expectedHash.equals(hashToCheck);
+    }
+
+    private String getHash(Long executor, Long target) {
+        return DigestUtils.sha1Hex(executor + target + "azaza");
     }
 
 

@@ -9,6 +9,7 @@ public class UserTask {
     private String description;
     private Long executor;
     private Long target;
+    private String hash;
 
     public UserTask(Task task, Translator translator, String locale) {
         id = task.getId();
@@ -24,6 +25,7 @@ public class UserTask {
         description = userTask.getDescription();
         executor = userTask.getExecutor();
         target = userTask.getTarget();
+        hash = userTask.getHash();
     }
 
     public String getId() {
@@ -64,5 +66,13 @@ public class UserTask {
 
     public void setTarget(Long target) {
         this.target = target;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }
