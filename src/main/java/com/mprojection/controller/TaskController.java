@@ -49,7 +49,7 @@ public class TaskController {
         return userService.getActiveTasks(fullUserInfo);
     }
 
-    @RequestMapping(value = "{userId}/{taskId}/", method = RequestMethod.POST)
+    @RequestMapping(value = "{userId}/{taskId}/", method = RequestMethod.GET)
     public UserTask addUserTask(@PathVariable long userId, @PathVariable String taskId, Integer measureUnit) {
         FullUserInfo executor = userService.get(userId, MeasureUnit.define(measureUnit));
         Task task = tasks.define(taskId);

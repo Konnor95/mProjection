@@ -111,13 +111,40 @@ CREATE VIEW users_public AS
 
 
 INSERT INTO users (firstName, lastName, gender, login, facebookToken, appleToken, lang, lat, lng, location, hp, xp, type, visibility, attack, defense)
-VALUES ('Dmytro', 'Bekuzarov', FALSE, 'Dima1', 'facebook1',
-        '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260317, 36.2249179,
-        'SRID=4326;POINT(36.2249179 50.0260317)', 100, 1000, 0, 50, 10, 5),
+VALUES ('Vladimir', 'Gritsenko', FALSE, 'Vova', 'facebook1',
+        '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.948185, 36.312105,
+        'SRID=4326;POINT(36.312105 49.948185)', 100, 1000, 0, 400, 10, 5),
   ('Maria', 'Brown', TRUE, 'Maria', 'facebook2',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260313, 36.2249173,
-   'SRID=4326;POINT(36.2249173 50.0260313)', 100, 0, 1, 25, 10, 5),
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 49.948568, 36.311894,
+   'SRID=4326;POINT(36.311894 49.948568)', 100, 0, 1, 400, 10, 5),
   ('Elsa', 'Frozen', TRUE, 'Frozen', 'facebook3',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 50.0260613, 36.2249473,
-   'SRID=4326;POINT(36.2249473 50.0260613)', 100, 0, 2, 100, 10, 5);
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.947795, 36.312087,
+   'SRID=4326;POINT(36.312087 49.947795)', 100, 0, 2, 400, 10, 5),
+  ('John', 'Doe', FALSE, 'JohnDoe', 'facebook4',
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 49.948223, 36.312945,
+   'SRID=4326;POINT(36.312945 49.948223)', 100, 1000, 0, 400, 10, 5),
+  ('Bruce', 'Wayne', TRUE, 'Bruce68', 'facebook5',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.948190, 36.311518,
+   'SRID=4326;POINT(36.311518 49.948190)', 100, 0, 1, 400, 10, 5),
+
+
+
+
+  ('Dmytro', 'Bekuzarov', FALSE, 'Dmytro', 'facebook6',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.481463, 30.748056,
+   'SRID=4326;POINT(30.748056 46.481463)', 100, 1000, 0, 400, 10, 5),
+  ('Barry', 'Allen', TRUE, 'Barry', 'facebook7',
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 46.481453, 30.748488,
+   'SRID=4326;POINT(30.748488 46.481453)', 100, 0, 1, 400, 10, 5),
+  ('Oliver', 'Queen', TRUE, 'Oliver', 'facebook8',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.481566, 30.746854,
+   'SRID=4326;POINT(30.746854 46.481566)', 100, 0, 2, 400, 10, 5),
+  ('John', 'Snow', FALSE, 'JohnSnow', 'facebook9',
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 46.482091, 30.747766,
+   'SRID=4326;POINT(30.747766 46.482091)', 100, 1000, 0, 400, 10, 5),
+  ('Iron', 'Man', TRUE, 'IronMan', 'facebook10',
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.480633, 30.747450,
+   'SRID=4326;POINT(30.747450 46.480633)', 100, 0, 1, 400, 10, 5)
+
 ;
+
