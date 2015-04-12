@@ -144,3 +144,5 @@ VALUES ('Vladimir', 'Gritsenko', FALSE, 'Vova', 'facebook1',
    '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.982071, 36.242472,
    'SRID=4326;POINT(36.242472 49.982071)', 100, 0, 1, 400, 10, 5);
 
+INSERT INTO users(firstName, lastName, gender, login, facebookToken, appleToken, lang, type, visibility, attack, defense) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+
