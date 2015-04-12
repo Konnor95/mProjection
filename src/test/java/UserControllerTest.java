@@ -71,8 +71,8 @@ public class UserControllerTest {
                 .param("lang", "ru")
                 .param("type", "SOLDIER"))
                 .andReturn();
-        FullUserInfo user2 = deserialize(result, FullUserInfo.class);
-        System.out.println(user2);
+        FullUserInfo user = deserialize(result, FullUserInfo.class);
+        System.out.println(user);
     }
 
     private String serialize(Object o) {

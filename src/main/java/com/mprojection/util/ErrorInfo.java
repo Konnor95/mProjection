@@ -1,12 +1,13 @@
 package com.mprojection.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorInfo {
 
     public final String url;
     public final Throwable exception;
-    public List<Throwable> causes;
+    public List<Throwable> causes = new ArrayList<>();
 
     public ErrorInfo(String url, Throwable ex) {
         this.url = url;
