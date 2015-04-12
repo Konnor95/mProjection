@@ -74,6 +74,7 @@ public class TaskController {
         if (!checkHash(getHash(task.getExecutor(), task.getTarget()), hash)) {
             throw new IllegalArgumentException("Hash not match");
         }
+
         userService.completeTask(task.getId());
         sendTaskCompleted(executor);
         sendOperationDone(userService.getPublicInfo(task.getTarget()));

@@ -207,9 +207,6 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         ps.setString(++index, user.getFacebookToken());
         ps.setString(++index, user.getAppleToken());
         ps.setString(++index, user.getLang());
-        index = setLocation(ps, index, user.getLat(), user.getLng());
-        ps.setInt(++index, user.getHp());
-        ps.setInt(++index, user.getXp());
         ps.setShort(++index, user.getTypeOrdinal());
         int defaultVisibility = user.getType().getDefaultVisibility();
         int visibility = user.getVisibility() < defaultVisibility ? defaultVisibility : user.getVisibility();
@@ -225,7 +222,7 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
 
     @Override
     protected int prepareForUpdate(FullUserInfo user, PreparedStatement ps) throws SQLException {
-        int index = prepareForInsert(user, ps);
+        int index = prepareForInsert(ps, user);
         ps.setBoolean(++index, user.isOnline());
         ps.setBoolean(++index, user.isDead());
         ps.setLong(++index, user.getId());
@@ -233,7 +230,7 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
     }
 
     private int prepareForUpdateWithFactors(FullUserInfo user, PreparedStatement ps) throws SQLException {
-        int index = prepareForInsert(user, ps);
+        int index = prepareForInsert(ps, user);
         ps.setBoolean(++index, user.isOnline());
         ps.setBoolean(++index, user.isDead());
         ps.setDouble(++index, user.getAttackFactor());
@@ -250,6 +247,31 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         boolean isDead = user.getHp() < 0;
         ps.setBoolean(++index, isDead);
         ps.setLong(++index, user.getId());
+        return index;
+    }
+
+    private int prepareForInsert(PreparedStatement ps, FullUserInfo user) throws SQLException {
+        int index = 0;
+        ps.setString(++index, user.getFirstName());
+        ps.setString(++index, user.getLastName());
+        ps.setBoolean(++index, user.isGender());
+        ps.setString(++index, user.getLogin());
+        ps.setString(++index, user.getFacebookToken());
+        ps.setString(++index, user.getAppleToken());
+        ps.setString(++index, user.getLang());
+        index = setLocation(ps, index, user.getLat(), user.getLng());
+        ps.setInt(++index, user.getHp());
+        ps.setInt(++index, user.getXp());
+        ps.setShort(++index, user.getTypeOrdinal());
+        int defaultVisibility = user.getType().getDefaultVisibility();
+        int visibility = user.getVisibility() < defaultVisibility ? defaultVisibility : user.getVisibility();
+        ps.setInt(++index, visibility);
+        int defaultAttack = user.getType().getDefaultAttack();
+        int attack = user.getAttack() < defaultAttack ? defaultAttack : user.getAttack();
+        ps.setInt(++index, attack);
+        int defaultDefense = user.getType().getDefaultDefense();
+        int defense = user.getDefense() < defaultDefense ? defaultDefense : user.getDefense();
+        ps.setInt(++index, defense);
         return index;
     }
 }

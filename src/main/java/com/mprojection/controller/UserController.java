@@ -67,12 +67,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public FullUserInfo add(@RequestBody FullUserInfo user) {
+    public FullUserInfo add(FullUserInfo user) {
         return userService.add(user);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public FullUserInfo update(@RequestBody FullUserInfo user, Integer measureUnit) {
+    public FullUserInfo update(FullUserInfo user, Integer measureUnit) {
         return userService.updateAndReturn(user, MeasureUnit.define(measureUnit));
     }
 

@@ -42,43 +42,36 @@ public class UserControllerTest {
         serializer = new JSONSerializer();
     }
 
-    @Test
-    public void updateAbilities() throws Exception {
-        String lat = "50.0260317";
-        String lng = "36.2249179";
-        String measureUnit = "1";
-        String timeZone = "GMT+02:00";
-        MvcResult result = mockMvc.perform(post("/api/user/updateAbilities")
-                .param("lat", lat)
-                .param("lng", lng)
-                .param("measureUnit", measureUnit)
-                .param("timeZone", timeZone))
-                .andExpect(status().isOk())
-                .andReturn();
-        Weather weather = deserialize(result, Weather.class);
-        System.out.println(weather);
-    }
+//    @Test
+//    public void updateAbilities() throws Exception {
+//        String lat = "50.0260317";
+//        String lng = "36.2249179";
+//        String measureUnit = "1";
+//        String timeZone = "GMT+02:00";
+//        MvcResult result = mockMvc.perform(post("/api/user/updateAbilities")
+//                .param("lat", lat)
+//                .param("lng", lng)
+//                .param("measureUnit", measureUnit)
+//                .param("timeZone", timeZone))
+//                .andExpect(status().isOk())
+//                .andReturn();
+//        Weather weather = deserialize(result, Weather.class);
+//        System.out.println(weather);
+//    }
 
     @Test
     public void add() throws Exception {
-        FullUserInfo user = new FullUserInfo();
-        user.setFirstName("First name");
-        user.setLastName("Last name");
-        user.setLogin("admin");
-        user.setFacebookToken("Facebook1234");
-        user.setAppleToken("Apple1234");
-        user.setLat(50.0260317);
-        user.setLng(36.2249179);
-        user.setType(UserType.SCIENTIST);
-        user.setHp(100);
-        user.setXp(100);
-        String s = serialize(user);
-        MvcResult result = mockMvc.perform(post("/api/user/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(s))
-                .andExpect(status().isOk())
+        MvcResult result = mockMvc.perform(post("/api/user/").
+                param("firstName", "First name").
+                param("lastName", "Last name").
+                param("gender", "true").
+                param("login", "Login")
+                .param("facebookToken", "Facebookdsfskfdkj1234")
+                .param("appleToken", "apple1234")
+                .param("lang", "ru")
+                .param("type", UserType.SCIENTIST.toString()))
                 .andReturn();
-        PublicUserInfo user2 = deserialize(result, PublicUserInfo.class);
+        FullUserInfo user2 = deserialize(result, FullUserInfo.class);
         System.out.println(user2);
     }
 

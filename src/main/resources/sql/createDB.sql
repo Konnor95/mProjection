@@ -36,29 +36,29 @@ AS
 LANGUAGE SQL STABLE;
 
 CREATE TABLE users (
-  id               BIGSERIAL             NOT NULL PRIMARY KEY,
-  firstName        VARCHAR(1000)         NOT NULL,
-  lastName         VARCHAR(1000)         NOT NULL,
-  gender           BOOLEAN               NOT NULL,
-  login            VARCHAR(200)          NOT NULL,
-  facebookToken    VARCHAR(200)                   DEFAULT NULL UNIQUE,
-  appleToken       VARCHAR(200)                   DEFAULT NULL,
-  lang             VARCHAR(10)           NOT NULL,
-  lat              DOUBLE PRECISION      NOT NULL CHECK (lat > -90 AND lat <= 90),
-  lng              DOUBLE PRECISION      NOT NULL CHECK (lng > -180 AND lng <= 180),
-  location         GEOMETRY(POINT, 4326) NOT NULL,
-  hp               INT                   NOT NULL DEFAULT 100,
-  xp               INT                   NOT NULL DEFAULT 0,
-  type             SMALLINT              NOT NULL DEFAULT 0,
-  isOnline         BOOLEAN               NOT NULL DEFAULT TRUE,
-  isDead           BOOLEAN               NOT NULL DEFAULT FALSE,
-  visibility       INT                   NOT NULL,
-  attack           INT                   NOT NULL,
-  defense          INT                   NOT NULL,
-  attackFactor     DOUBLE PRECISION      NOT NULL DEFAULT 1,
-  defenseFactor    DOUBLE PRECISION      NOT NULL DEFAULT 1,
-  visibilityFactor DOUBLE PRECISION      NOT NULL DEFAULT 1,
-  healthFactor     DOUBLE PRECISION      NOT NULL DEFAULT 1
+  id               BIGSERIAL        NOT NULL PRIMARY KEY,
+  firstName        VARCHAR(1000)    NOT NULL,
+  lastName         VARCHAR(1000)    NOT NULL,
+  gender           BOOLEAN          NOT NULL,
+  login            VARCHAR(200)     NOT NULL,
+  facebookToken    VARCHAR(200)              DEFAULT NULL UNIQUE,
+  appleToken       VARCHAR(200)              DEFAULT NULL,
+  lang             VARCHAR(10)      NOT NULL,
+  lat              DOUBLE PRECISION CHECK (lat > -90 AND lat <= 90),
+  lng              DOUBLE PRECISION CHECK (lng > -180 AND lng <= 180),
+  location         GEOMETRY(POINT, 4326),
+  hp               INT              NOT NULL DEFAULT 100,
+  xp               INT              NOT NULL DEFAULT 0,
+  type             SMALLINT         NOT NULL DEFAULT 0,
+  isOnline         BOOLEAN          NOT NULL DEFAULT TRUE,
+  isDead           BOOLEAN          NOT NULL DEFAULT FALSE,
+  visibility       INT              NOT NULL,
+  attack           INT              NOT NULL,
+  defense          INT              NOT NULL,
+  attackFactor     DOUBLE PRECISION NOT NULL DEFAULT 1,
+  defenseFactor    DOUBLE PRECISION NOT NULL DEFAULT 1,
+  visibilityFactor DOUBLE PRECISION NOT NULL DEFAULT 1,
+  healthFactor     DOUBLE PRECISION NOT NULL DEFAULT 1
 );
 
 CREATE INDEX users_location_idx ON users USING GIST (location);
@@ -79,7 +79,7 @@ CREATE TABLE user_tasks (
   taskId    VARCHAR(100) NOT NULL,
   userId    BIGINT       NOT NULL,
   completed BOOLEAN      NOT NULL DEFAULT FALSE,
-  target    BIGINT       DEFAULT NULL ,
+  target    BIGINT                DEFAULT NULL,
   FOREIGN KEY (userId) REFERENCES users (id)
   ON DELETE CASCADE
   ON UPDATE RESTRICT
@@ -128,23 +128,19 @@ VALUES ('Vladimir', 'Gritsenko', FALSE, 'Vova', 'facebook1',
    'SRID=4326;POINT(36.311518 49.948190)', 100, 0, 1, 400, 10, 5),
 
 
-
-
   ('Dmytro', 'Bekuzarov', FALSE, 'Dmytro', 'facebook6',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.481463, 30.748056,
-   'SRID=4326;POINT(30.748056 46.481463)', 100, 1000, 0, 400, 10, 5),
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.982357, 36.243191,
+   'SRID=4326;POINT(36.243191 49.982357)', 100, 1000, 0, 400, 10, 5),
   ('Barry', 'Allen', TRUE, 'Barry', 'facebook7',
-   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 46.481453, 30.748488,
-   'SRID=4326;POINT(30.748488 46.481453)', 100, 0, 1, 400, 10, 5),
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 49.982569, 36.242958,
+   'SRID=4326;POINT(36.242958 49.982569)', 100, 0, 1, 400, 10, 5),
   ('Oliver', 'Queen', TRUE, 'Oliver', 'facebook8',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.481566, 30.746854,
-   'SRID=4326;POINT(30.746854 46.481566)', 100, 0, 2, 400, 10, 5),
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.982502, 36.243698,
+   'SRID=4326;POINT(36.243698 49.982502)', 100, 0, 2, 400, 10, 5),
   ('John', 'Snow', FALSE, 'JohnSnow', 'facebook9',
-   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 46.482091, 30.747766,
-   'SRID=4326;POINT(30.747766 46.482091)', 100, 1000, 0, 400, 10, 5),
+   '<d80f2e58 9e171ec3 027a8ad9 73f2c9c6 5d3a75dd 620dffd0 d86cc403 1c6d4967>', 'en', 49.982065, 36.243373,
+   'SRID=4326;POINT(36.243373 49.982065)', 100, 1000, 0, 400, 10, 5),
   ('Iron', 'Man', TRUE, 'IronMan', 'facebook10',
-   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 46.480633, 30.747450,
-   'SRID=4326;POINT(30.747450 46.480633)', 100, 0, 1, 400, 10, 5)
-
-;
+   '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.982071, 36.242472,
+   'SRID=4326;POINT(36.242472 49.982071)', 100, 0, 1, 400, 10, 5);
 
