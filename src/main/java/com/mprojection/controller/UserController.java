@@ -66,7 +66,7 @@ public class UserController {
         return userService.get(id, MeasureUnit.define(measureUnit));
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public FullUserInfo add(FullUserInfo user) {
         return userService.add(user);
     }
