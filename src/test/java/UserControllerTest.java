@@ -62,14 +62,14 @@ public class UserControllerTest {
     @Test
     public void add() throws Exception {
         MvcResult result = mockMvc.perform(post("/api/user/").
-                param("firstName", "First name").
-                param("lastName", "Last name").
-                param("gender", "true").
-                param("login", "Login")
-                .param("facebookToken", "Facebookdsfskfdkj1234")
-                .param("appleToken", "apple1234")
+                param("firstName", "Vladimir").
+                param("lastName", "Gritsenko").
+                param("gender", "0").
+                param("login", "Vladimir Gritsenko")
+                .param("facebookToken", "1102682479758112")
+                .param("appleToken", "simulator")
                 .param("lang", "ru")
-                .param("type", UserType.SCIENTIST.toString()))
+                .param("type", "SOLDIER"))
                 .andReturn();
         FullUserInfo user2 = deserialize(result, FullUserInfo.class);
         System.out.println(user2);

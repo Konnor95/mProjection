@@ -1,5 +1,7 @@
 package com.mprojection.util;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
+
 public class ErrorInfo {
 
     public final String url;
@@ -9,7 +11,7 @@ public class ErrorInfo {
     public ErrorInfo(String url, Throwable ex) {
         this.url = url;
         this.exceptionClass = ex.getClass().getName();
-        this.exceptionMessage = ex.getMessage();
+        this.exceptionMessage = getStackTrace(ex);
     }
 
 }
