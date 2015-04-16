@@ -11,6 +11,14 @@ AS
   $$
 LANGUAGE SQL STABLE;
 
+CREATE FUNCTION formatPoint(lat DOUBLE PRECISION, lng DOUBLE PRECISION)
+  RETURNS TEXT
+AS
+  $$
+  SELECT format('SRID=4326;POINT(%2$s %1$s)', lat, lng)
+  $$
+LANGUAGE SQL STABLE;
+
 CREATE FUNCTION distance(lat1 NUMERIC, lng1 NUMERIC, lat2 NUMERIC, lng2 NUMERIC)
   RETURNS DOUBLE PRECISION
 AS
@@ -41,7 +49,7 @@ CREATE TABLE users (
   lastName         VARCHAR(1000)    NOT NULL,
   gender           BOOLEAN          NOT NULL,
   login            VARCHAR(200)     NOT NULL,
-  facebookToken    VARCHAR(200)              DEFAULT NULL UNIQUE,
+  facebookToken    VARCHAR(200)              DEFAULT NULL,
   appleToken       VARCHAR(200)              DEFAULT NULL,
   lang             VARCHAR(10)      NOT NULL,
   lat              DOUBLE PRECISION CHECK (lat > -90 AND lat <= 90),

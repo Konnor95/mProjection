@@ -4,6 +4,7 @@ import com.mprojection.annotation.EnableTransaction;
 import com.mprojection.db.repository.UserRepository;
 import com.mprojection.entity.FullUserInfo;
 import com.mprojection.entity.PublicUserInfo;
+import com.mprojection.entity.UserType;
 import com.mprojection.entity.ability.Abilities;
 import com.mprojection.entity.ability.Ability;
 import com.mprojection.entity.ability.UserAbility;
@@ -11,12 +12,17 @@ import com.mprojection.entity.task.Task;
 import com.mprojection.entity.task.Tasks;
 import com.mprojection.entity.task.UserTask;
 import com.mprojection.exception.LogicalException;
+import com.mprojection.util.GeoUtil;
 import com.mprojection.util.Translator;
 import com.mprojection.util.measureunit.MeasureUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static com.mprojection.util.GeoUtil.generateRandomPointWithinArea;
 
 @Service
 public class UserService {
@@ -118,6 +124,33 @@ public class UserService {
     public PublicUserInfo findNearestUserOfDifferentGender(long userId) {
         return repository.findNearestUserOfDifferentGender(userId);
     }
+
+    @EnableTransaction
+    public List<PublicUserInfo> generateRandomUsers(double lat, double lng, int radius, int count) {
+        Random random = new Random();
+        List<FullUserInfo> users = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            GeoUtil.Point point = generateRandomPointWithinArea(random, radius, lat, lng);
+            FullUserInfo user = new FullUserInfo();
+            user.setLang("en");
+            user.setFacebookToken("facebook");
+            user.setAppleToken("<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>");
+            user.setFirstName("firstName" + i);
+            user.setLastName("lastName" + i);
+            user.setGender(false);
+            user.setLogin("login" + i);
+            user.setType(UserType.ZOMBIE);
+            user.setLat(point.getX());
+            user.setLng(point.getY());
+            users.add(user);
+        }
+        List<PublicUserInfo> publicUserInfos = new ArrayList<>();
+        for (FullUserInfo info : repository.addAllWithCoordinates(users)) {
+            publicUserInfos.add(info);
+        }
+        return publicUserInfos;
+    }
+
 
     private List<String> getAbilitiesIds(long id) {
         return repository.getAbilitiesIds(id);

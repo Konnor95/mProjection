@@ -13,9 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sun.text.resources.cldr.uk.FormatData_uk;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -41,6 +45,26 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
     @Override
     public FullUserInfo add(FullUserInfo user) {
         return add(user, get("user.insert"));
+    }
+
+    public List<FullUserInfo> addAllWithCoordinates(List<FullUserInfo> users) {
+        String sql = get("user.insert.full");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            for (FullUserInfo user : users) {
+                setLocation(ps, prepareForInsert(user, ps), user.getLat(), user.getLng());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            List<Long> ids = new ArrayList<>();
+            while (generatedKeys.next()) {
+                ids.add(generatedKeys.getLong(1));
+            }
+            return getAll(ids);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
     }
 
     @Override
@@ -84,9 +108,8 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         return getById(id, get("user.select.public.by.id"), PUBLIC_USER_INFO_EXTRACTOR);
     }
 
-    @Override
     public List<FullUserInfo> getAll(List<Long> ids) {
-        return null;
+        return getAll(ids, get("user.select.all.by.ids"), FULL_USER_INFO_EXTRACTOR);
     }
 
     public List<String> getAbilitiesIds(long userId) {

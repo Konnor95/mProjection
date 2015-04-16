@@ -90,6 +90,21 @@ public class UserController {
         return victim;
     }
 
+    @RequestMapping(value = "{id}/random/{count}/", method = RequestMethod.POST)
+    public List<PublicUserInfo> generateRandomUsers(@PathVariable long id, @PathVariable int count) {
+        PublicUserInfo user = userService.getPublicInfo(id);
+        return userService.generateRandomUsers(user.getLat(), user.getLng(), 400, count);
+    }
+
+    @RequestMapping(value = "{id}/coordinates/{lat}-{lng}/", method = RequestMethod.PUT)
+    public FullUserInfo updateCoordinates(@PathVariable long id, @PathVariable double lat, @PathVariable double lng) {
+        FullUserInfo user = userService.get(id, MeasureUnit.METRIC);
+        user.setLat(lat);
+        user.setLng(lng);
+        userService.update(user);
+        return user;
+    }
+
     @ExceptionHandler({DAOException.class})
     public ErrorInfo handleError(HttpServletRequest request, DAOException exception) {
         return new ErrorInfo(request.getRequestURL().toString(), exception.getCause());
