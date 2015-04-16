@@ -90,7 +90,7 @@ public class UserController {
         return victim;
     }
 
-    @RequestMapping(value = "{id}/random/{count}/", method = RequestMethod.POST)
+    @RequestMapping(value = "{id}/random/{count}/", method = RequestMethod.GET)
     public List<PublicUserInfo> generateRandomUsers(@PathVariable long id, @PathVariable int count) {
         PublicUserInfo user = userService.getPublicInfo(id);
         return userService.generateRandomUsers(user.getLat(), user.getLng(), 400, count);
