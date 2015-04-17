@@ -5,7 +5,7 @@ import com.mprojection.weather.Weather;
 
 public enum UserType {
 
-    SOLDIER(50, 100, 10, 5) {
+    SOLDIER(400, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
             double attackFactor = 1;
@@ -28,7 +28,7 @@ public enum UserType {
             user.setHealthFactor(healthFactor);
         }
     },
-    SCIENTIST(25, 100, 10, 5) {
+    SCIENTIST(400, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
             double attackFactor = 1;
@@ -51,7 +51,7 @@ public enum UserType {
             user.setHealthFactor(healthFactor);
         }
     },
-    ZOMBIE(100, 100, 10, 5) {
+    ZOMBIE(400, 100, 10, 5) {
         @Override
         public void applyWeatherCondition(FullUserInfo user, Weather weather, SunInfo sunInfo) {
             double attackFactor = 1;

@@ -138,7 +138,7 @@ public class UserService {
         Random random = new Random();
         List<FullUserInfo> users = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            GeoUtil.Point point = generateRandomPointWithinArea(random, radius, lat, lng);
+            GeoUtil.Point point = generateRandomPointWithinArea(random, radius, 5, lat, lng);
             FullUserInfo user = new FullUserInfo();
             user.setLang("en");
             user.setFacebookToken("facebook");

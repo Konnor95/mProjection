@@ -4,13 +4,14 @@ import java.util.Random;
 
 public class GeoUtil {
 
-    public static Point generateRandomPointWithinArea(Random random, double areaRadius, double lat, double lng) {
-        double w = areaRadius / 111300 * Math.sqrt(random.nextDouble());
-        double t = 2 * Math.PI * random.nextDouble();
-        double x = w * Math.cos(t);
-        x = x / Math.cos(lng);
-        double y = w * Math.sin(t);
-        return new Point(x + lat, y + lng);
+    public static Point generateRandomPointWithinArea(Random random, int areaRadius, int minRadius, double lat, double lng) {
+        double radius = (random.nextInt((areaRadius - minRadius) + 1) + minRadius) / 111300.0;
+        int angle = random.nextInt(91);
+        double dx = radius * Math.cos(angle);
+        double dy = radius * Math.sin(angle);
+        dx = random.nextBoolean() ? dx : -dx;
+        dy = random.nextBoolean() ? dy : -dy;
+        return new Point(lat + dx, lng + dy);
     }
 
     public static class Point {

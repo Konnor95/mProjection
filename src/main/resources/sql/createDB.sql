@@ -129,6 +129,8 @@ CREATE TABLE inventory (
   ON UPDATE CASCADE
 );
 
+
+
 INSERT INTO users (firstName, lastName, gender, login, facebookToken, appleToken, lang, lat, lng, location, hp, xp, type, visibility, attack, defense)
 VALUES ('Vladimir', 'Gritsenko', FALSE, 'Vova', 'facebook1',
         '<927d54e5 88a56875 bed2f8a7 490278c0 c28c573e 8c6db3a8 ee2d8351 5bf31048>', 'en', 49.948185, 36.312105,
