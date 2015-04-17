@@ -88,6 +88,7 @@ CREATE TABLE user_tasks (
   userId    BIGINT       NOT NULL,
   completed BOOLEAN      NOT NULL DEFAULT FALSE,
   target    BIGINT                DEFAULT NULL,
+  hash      VARCHAR(1000)         DEFAULT NULL,
   FOREIGN KEY (userId) REFERENCES users (id)
   ON DELETE CASCADE
   ON UPDATE RESTRICT

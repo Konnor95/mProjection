@@ -55,9 +55,9 @@ public class TaskController {
         Task task = tasks.define(taskId);
         task.setExecutor(userId);
         task.setTarget(taskManager);
+        task.setHash(getHash(task.getExecutor(), task.getTarget()));
         userService.addTask(task);
         UserTask userTask = tasks.define(taskId, executor.getLang());
-        userTask.setHash(getHash(task.getExecutor(), task.getTarget()));
         UserTask userTask2 = new UserTask(userTask);
         userTask2.setExecutor(userTask.getTarget());
         userTask2.setTarget(userTask.getExecutor());
@@ -86,7 +86,9 @@ public class TaskController {
     }
 
     private String getHash(Long executor, Long target) {
-        return DigestUtils.sha1Hex(executor + target + "azaza");
+        String s = DigestUtils.sha1Hex(executor + target + "azaza");
+        System.out.println(s);
+        return s;
     }
 
 

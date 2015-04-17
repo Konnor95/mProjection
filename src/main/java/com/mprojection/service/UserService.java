@@ -40,6 +40,10 @@ public class UserService {
     private Tasks tasks;
 
     public FullUserInfo add(FullUserInfo user) {
+        FullUserInfo existingUser = repository.getByFacebookToken(user.getFacebookToken());
+        if (existingUser != null) {
+            return existingUser;
+        }
         return repository.add(user);
     }
 

@@ -12,6 +12,7 @@ public abstract class Task {
     private String descriptionKey;
     private Long executor;
     private Long target;
+    private String hash;
 
     protected Task(String id, String nameKey, String descriptionKey) {
         this.id = id;
@@ -60,4 +61,11 @@ public abstract class Task {
     }
 
 
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 }

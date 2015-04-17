@@ -103,6 +103,18 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         return getById(id, get("user.select.full.by.id"), FULL_USER_INFO_EXTRACTOR);
     }
 
+    public FullUserInfo getByFacebookToken(String facebookToken) {
+        String sql = get("user.select.full.by.facebookToken");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, facebookToken);
+            List<FullUserInfo> records = executeQuery(ps, FULL_USER_INFO_EXTRACTOR);
+            return records.isEmpty() ? null : records.get(0);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
     public PublicUserInfo getPublicInfoById(long id) {
         return getById(id, get("user.select.public.by.id"), PUBLIC_USER_INFO_EXTRACTOR);
     }
@@ -183,6 +195,7 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
             ps.setString(1, task.getId());
             ps.setLong(2, task.getExecutor());
             ps.setLong(3, task.getTarget());
+            ps.setString(4, task.getHash());
             ps.executeUpdate();
         } catch (SQLException e) {
             LOGGER.warn(ERROR_MESSAGE, sql, e);

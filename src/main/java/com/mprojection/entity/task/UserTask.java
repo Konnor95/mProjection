@@ -17,6 +17,7 @@ public class UserTask {
         description = task.getDescription(translator, locale);
         executor = task.getExecutor();
         target = task.getTarget();
+        hash = task.getHash();
     }
 
     public UserTask(UserTask userTask) {
