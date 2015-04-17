@@ -125,6 +125,10 @@ public class UserService {
         repository.completeTask(taskId);
     }
 
+    public PublicUserInfo findNearestUser(long userId) {
+        return repository.findNearestUser(userId);
+    }
+
     public PublicUserInfo findNearestUserOfDifferentGender(long userId) {
         return repository.findNearestUserOfDifferentGender(userId);
     }

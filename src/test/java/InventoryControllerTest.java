@@ -38,11 +38,10 @@ public class InventoryControllerTest {
 
     @Test
     public void add() throws Exception {
-        MvcResult result = mockMvc.perform(post("/api/inventory/").
+        MvcResult result = mockMvc.perform(post("/api/inventory/5/").
                 param("itemType", "Lighter").
                 param("itemDescription", "Lighter can be used to fire zombie").
-                param("barCode", "4820063390360").
-                param("userId", "5"))
+                param("barCode", "4820063390360"))
                 .andReturn();
         System.out.println(result);
     }

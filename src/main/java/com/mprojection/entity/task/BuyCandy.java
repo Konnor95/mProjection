@@ -16,7 +16,7 @@ public class BuyCandy extends Task {
 
     @Override
     public void setTarget(TaskManager taskManager) {
-        setTarget(taskManager.findNearestUserOfDifferentGender(getExecutor()));
+        setTarget(taskManager.findNearestUser(getExecutor()));
     }
 
 }

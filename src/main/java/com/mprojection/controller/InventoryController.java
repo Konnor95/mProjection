@@ -17,19 +17,21 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public InventoryItem add(InventoryItem item, long userId) {
+    @RequestMapping(value = "{userId}/", method = RequestMethod.POST)
+    public InventoryItem add(InventoryItem item, @PathVariable long userId) {
         return inventoryService.add(item, userId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public void update(InventoryItem item) {
+    public InventoryItem update(InventoryItem item) {
         inventoryService.update(item);
+        return item;
     }
 
     @RequestMapping(value = "{id}/", method = RequestMethod.DELETE)
-    public void delete(@PathVariable long id) {
+    public long delete(@PathVariable long id) {
         inventoryService.delete(id);
+        return id;
     }
 
     @RequestMapping(value = "{userId}/", method = RequestMethod.GET)

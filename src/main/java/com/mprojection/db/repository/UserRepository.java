@@ -232,6 +232,24 @@ public class UserRepository extends AbstractRepository<FullUserInfo> {
         }
     }
 
+    public PublicUserInfo findNearestUser(long userId) {
+        PublicUserInfo user = getPublicInfoById(userId);
+        String sql = get("user.findNearestUser");
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setDouble(1, user.getLat());
+            ps.setDouble(2, user.getLng());
+            ps.setInt(3, user.getVisibility());
+            ps.setLong(4, user.getId());
+            ps.setDouble(5, user.getLat());
+            ps.setDouble(6, user.getLng());
+            List<PublicUserInfo> users = executeQuery(ps, PUBLIC_USER_INFO_EXTRACTOR);
+            return users.isEmpty() ? null : users.get(0);
+        } catch (SQLException e) {
+            LOGGER.warn(ERROR_MESSAGE, sql, e);
+            throw new DAOException(getMessage(sql), e);
+        }
+    }
+
     @Override
     protected int prepareForInsert(FullUserInfo user, PreparedStatement ps) throws SQLException {
         int index = 0;
