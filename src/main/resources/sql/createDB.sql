@@ -118,6 +118,16 @@ CREATE VIEW users_public AS
   FROM users
   WHERE isDead = FALSE AND isOnline = TRUE;
 
+CREATE TABLE inventory (
+  id              BIGSERIAL NOT NULL PRIMARY KEY,
+  itemType        VARCHAR(1000),
+  itemDescription VARCHAR(1000),
+  barCode         VARCHAR(1000),
+  userId          BIGINT    NOT NULL,
+  FOREIGN KEY (userId) REFERENCES users (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+);
 
 INSERT INTO users (firstName, lastName, gender, login, facebookToken, appleToken, lang, lat, lng, location, hp, xp, type, visibility, attack, defense)
 VALUES ('Vladimir', 'Gritsenko', FALSE, 'Vova', 'facebook1',
